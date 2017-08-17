@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:animateLayoutChanges="true"
+    tools:context="propulsar.qroo.PresentationLayer.Activities.TabActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarChat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="0dp"
+        android:background="@color/colorPrimaryDark"
+        style="@style/AppThemeNoBar">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="3dp"
+            android:src="@drawable/yonayarit"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:clipToPadding="false"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:animateLayoutChanges="true"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/msgNoHay"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:textStyle="bold"
+                android:textColor="@color/textColorPrimary"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="@string/msgs_nohay"/>
+
+            <LinearLayout
+                android:id="@+id/switchChatLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Space
+                    android:layout_width="@dimen/activity_horizontal_margin"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/buttonChat_bot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/switchButtonBotImg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/bot_off"/>
+                    <TextView
+                        android:id="@+id/textBot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:text="@string/chat_bot"/>
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/buttonChat_staff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/switchButtonStaffImg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/user_on"/>
+
+                    <TextView
+                        android:id="@+id/textStaff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:text="@string/chat_user"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/switchSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorAccent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/switchChatLayout"/>
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/chatSwipeRefreshLayout"
+                android:layout_below="@id/switchSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/msgRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clipToPadding="false"
+            android:animateLayoutChanges="false">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_sendMessage"
+                android:animateLayoutChanges="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_send_material"
+                android:scaleType="center"
+                android:tint="#FFF"/>
+
+            <LinearLayout
+                android:animateLayoutChanges="false"
+                android:layout_width="0dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/fab_sendMessage"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/buttonLocation"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_place"
+                    android:tint="@color/colorAccent"/>
+
+                <ImageView
+                    android:id="@+id/buttonImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_image"
+                    android:tint="@color/colorAccent"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:animateLayoutChanges="true"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tituloAccion"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/textColorPrimary"
+                        android:gravity="center"
+                        android:text="@string/enviar_ubi"
+                        android:textStyle="bold"
+                        android:textAppearance="?android:textAppearanceMedium"/>
+
+                    <android.support.v7.widget.CardView
+                        android:visibility="visible"
+                        android:id="@+id/cardMensaje"
+                        android:animateLayoutChanges="true"
+                        android:layout_width="match_parent"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp"
+                        android:layout_height="match_parent">
+                        <propulsar.qroo.PresentationLayer.CustomViews.EditTextCampo
+                            android:animateLayoutChanges="true"
+                            android:id="@+id/editText_mensaje"
+                            android:layout_width="match_parent"
+                            android:padding="10dp"
+                            android:maxLines="6"
+                            android:scrollbars="vertical"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:layout_height="wrap_content"
+                            android:background="#FAFAFA"/>
+                    </android.support.v7.widget.CardView>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:animateLayoutChanges="true"
+                android:visibility="gone"
+                android:layout_alignStart="@id/fab_sendMessage"
+                android:layout_alignEnd="@id/fab_sendMessage"
+                android:layout_alignTop="@id/fab_sendMessage"
+                android:layout_alignBottom="@id/fab_sendMessage"
+                android:id="@+id/progress_chat"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mapContainer"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/galleryContainer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="130dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+                android:stretchMode="columnWidth"
+                android:scrollbars="vertical"
+                android:scrollbarSize="5dp"
+                android:gravity="center"
+                />
+            <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/progressGalleryLoading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chat_obteniendogaleria"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/textColorPrimary"/>
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </RelativeLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_camera"
+                android:animateLayoutChanges="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/ic_photo"
+                android:scaleType="center"
+                android:tint="#FFF"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_gallery"
+                android:animateLayoutChanges="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/ic_collections"
+                android:scaleType="center"
+                android:tint="#FFF"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

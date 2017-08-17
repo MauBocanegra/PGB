@@ -1,0 +1,127 @@
+<resources>
+    <string name="app_name">YoNayarit</string>
+    <string name="facebook_app_id">254162375008188</string>
+    <string name="fb_login_protocol_scheme">fb254162375008188</string>
+    <string name="title_activity_login">Login</string>
+
+    <string name="sharedPrefName">SharedPrefYoNayarit</string>
+
+    <string name="login_string_obien">o bien</string>
+    <string name="login_string_obien2">o ingresa con tu correo </string>
+    <string name="aceptar">ACEPTAR</string>
+    <string name="iniSesion">Iniciar sesión</string>
+    <string name="hintCorreo">E-mail</string>
+    <string name="hintContra">Contraseña</string>
+    <string name="title_activity_tab">TabActivity</string>
+
+    <string name="button_home_vota">Vota</string>
+    <string name="button_home_cuenta">Cuéntanos</string>
+    <string name="button_home_benef">Beneficios</string>
+    <string name="placeholder_fecha">00/00/0000</string>
+    <!--
+    <string name="placeholder_titulo_benefit">¡Domingo sin carro!</string>
+    <string name="placeholder_titulo_vota">Propuesta más votada del mes.</string>
+    <string name="placeholder_titulo_encuesta">Contesta ésta encuesta para obtener una beca.</string>
+    -->
+    <string name="placeholder_titulo_benefit"></string>
+    <string name="placeholder_titulo_vota"></string>
+    <string name="placeholder_titulo_encuesta"></string>
+
+    <string name="ph_perfil_nombre">Nombre</string>
+    <string name="ph_perfil_correo">Correo electrónico</string>
+    <string name="ph_perfil_contra">Contraseña</string>
+    <string name="ph_perfil_edad">Edad</string>
+    <string name="ph_perfil_genero">Género</string>
+    <string name="ph_perfil_residencia">Lugar de residencia</string>
+    <string name="ph_perfil_profesion">Profesión</string>
+    <string name="ph_perfil_notifs">Notificaciones</string>
+    <string name="ph_perfil_acerca">Acerca de</string>
+    <string name="perfil_buttonGuardarCambios">GUARDAR CAMBIOS</string>
+    <string name="perfil_buttonCerrarSesion">GUARDAR CAMBIOS</string>
+
+    <string name="ph_case_folio">00000000</string>
+    <string name="ph_case_categoria">Categoria</string>
+    <string name="ph_case_notif">Notificaciones</string>
+
+    <string name="vota_verVotadas">Ver votadas</string>
+    <string name="vota_subirPropuesta">Subir propuesta</string>
+    <string name="vota_encontra">EN CONTRA</string>
+    <string name="vota_afavor">A FAVOR</string>
+    <string name="vota_subida">Subida por Cynthia</string>
+    <string name="vota_titulo">Propuesta</string>
+
+    <string name="ph_subirProp_titulo">Título propuesta</string>
+    <string name="ph_subirProp_desc">Descripción propuesta</string>
+    <string name="subirProp_button">Subir propuesta</string>
+
+    <string name="ph_item_votadas_titulo">Título (000)</string>
+
+    <string name="ph_correo">Correo</string>
+    <string name="ph_contra">Contraseña</string>
+
+    <string name="event_compartir">COMPARTIR</string>
+    <!--
+    <string name="ph_events_titulo">¡Domingo sin carros!</string>
+    <string name="ph_events_desc">Te invitamos este domingo 20 de Febrero al día sin carros. Sal con tu familia a caminar y disfrutar</string>
+    -->
+    <string name="ph_events_titulo"></string>
+    <string name="ph_events_desc"></string>
+
+    <string name="chat_tocaaqui">Ir a: </string>
+    <string name="chat_bot">ProBot</string>
+    <string name="chat_user">Staff</string>
+    <string name="enviar_ubi">Enviar esta ubicación</string>
+    <string name="chat_obteniendogaleria">Cargando tus archivos...</string>
+
+    <!--
+    <string name="benefs_contestarEncuesta">CONTESTAR ENCUESTA</string>
+    <string name="detBenef_ph_titulo">Gana una beca en inglés!</string>
+    <string name="detBenef_ph_desc">Contesta la encuesta para ganar una beca completa de tres meses en la escuela de idiomas del municipio.</string>
+    -->
+
+    <string name="benefs_contestarEncuesta">CONTESTAR ENCUESTA</string>
+    <string name="benefs_encuestaContestada">Ya estás participando por este beneficio</string>
+    <string name="detBenef_ph_titulo"></string>
+    <string name="detBenef_ph_desc"></string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="detalleCase_revisado">Revisado!</string>
+    <string name="detalleCase_enviado">Enviado a obras públicas!</string>
+    <string name="detalleCase_proceso">En proceso</string>
+    <string name="detalleCase_arreglando">Arreglando el problema</string>
+    <string name="detalleCase_resuelto">Resuelto</string>
+
+    <string name="registro_registrate">Regístrate con tu correo</string>
+    <string name="registro_button">Regístrate</string>
+    <string name="contra_cambiar">Actualizar contraseña</string>
+    <string name="registro_obien">Crea una nueva cuenta</string>
+    <string name="login_recuperar">Recuperar contraseña</string>
+    <string name="contramenu">Recuperar contraseña</string>
+
+    <string name="survey_contestar">CONTESTAR</string>
+
+    <string name="vota_nohay">No hay propuestas pendientes por votar</string>
+    <string name="eventos_nohay">Espera los eventos que vendrán próximamente</string>
+    <string name="benefs_nohay">¡Pronto habrá nuevos beneficios por disfrutar!</string>
+    <string name="votadas_nohay">Aún no has votado por ninguna propuesta</string>
+    <string name="cases_nohay">Aquí podrás dar seguimiento a los casos que se den de alta</string>
+    <string name="notifs_nohay">No hay notificaciones para mostrar</string>
+    <string name="msgs_nohay">¿Tienes alguna solicitud, gestión, denuncia o sugerencia?\n¡Envíanos un mensaje!\nY a la brevedad alguien del staff te contestará personalmente </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detalle_case">DetalleCase</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_survey">SurveyActivity</string>
+
+    <string-array name="generos">
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+    <string name="prompt_genero">Géneros</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+
+</resources>

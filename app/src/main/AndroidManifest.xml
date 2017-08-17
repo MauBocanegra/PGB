@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="propulsar.qroo">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <application
+        android:name=".DomainLayer.Objects.AnalyticsApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        tools:replace="android:icon,android:theme"
+        android:theme="@style/AppTheme">
+
+        <!-- AIzaSyD2Xl4K93_3bPLnlTEHBqlJe3CCLzOuNyg awerenessApi-->
+        <meta-data
+            android:name="com.google.android.awareness.API_KEY"
+            android:value="AIzaSyD2Xl4K93_3bPLnlTEHBqlJe3CCLzOuNyg"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD2Xl4K93_3bPLnlTEHBqlJe3CCLzOuNyg" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider254162375008188"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_notif_yonayarit" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PresentationLayer.Activities.Splash"
+            android:theme="@style/AppThemeNoBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PresentationLayer.Activities.Login"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.TabActivity"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.VotaActivity"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.SubirPropActivity"
+            android:parentActivityName=".PresentationLayer.Activities.VotaActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.PropsVotadas"
+            android:parentActivityName=".PresentationLayer.Activities.VotaActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.EventActivity"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.BenefsActivity"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.DetalleBenefActivity"
+            android:parentActivityName=".PresentationLayer.Activities.BenefsActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.ChatActivity"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.DetalleProp"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.DetalleCase"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.RegisterActivity"
+            android:parentActivityName=".PresentationLayer.Activities.Login"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.SurveyActivity"
+            android:parentActivityName=".PresentationLayer.Activities.BenefsActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".PresentationLayer.Activities.WebViewActivity"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar"/>
+        <activity
+            android:name=".PresentationLayer.Activities.WebViewEventActivity"
+            android:parentActivityName=".PresentationLayer.Activities.TabActivity"
+            android:theme="@style/AppThemeNoBar"/>
+
+        <!--
+      Optionally, register AnalyticsReceiver and AnalyticsService to support background
+      dispatching on non-Google Play devices
+        -->
+
+        <!-- [START firebase_service] -->
+        <!--
+        <service
+            android:name=".DomainLayer.Services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        -->
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service
+            android:name=".DomainLayer.Services.MyInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_iid_service] -->
+        <!--
+        <service android:name=".DomainLayer.Services.MyJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+        -->
+
+        <service
+            android:name=".DomainLayer.Services.RegistrationIntentService"
+            android:exported="false">
+        </service>
+
+        <receiver android:name="com.microsoft.windowsazure.notifications.NotificationsBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="propulsar.yonayarit" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

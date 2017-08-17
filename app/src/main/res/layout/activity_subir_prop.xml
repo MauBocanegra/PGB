@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="propulsar.qroo.PresentationLayer.Activities.TabActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarVota"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="0dp"
+        style="@style/AppThemeNoBar">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="3dp"
+            android:src="@drawable/yonayarit"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="@dimen/activity_vertical_margin"
+        android:clipToPadding="false">
+
+        <!-- EDITTEXT RESIDENCIA -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/subirPropTituloInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            app:errorEnabled="true">
+            <EditText
+                android:id="@+id/subirProp_titulo_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ph_subirProp_titulo" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.CardView
+            android:animateLayoutChanges="true"
+            app:layout_behavior="com.example.FloatingActionButtonBehavior"
+            android:id="@+id/buttonSubirProp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:cardBackgroundColor="@color/colorAccent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:animateLayoutChanges="true"
+                    android:id="@+id/textButtonSubirProp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="#FFF"
+                    android:text="@string/subirProp_button"
+                    />
+
+                <ProgressBar
+                    android:animateLayoutChanges="true"
+                    android:id="@+id/progressButtonSubirProp"
+                    android:visibility="gone"
+                    android:theme="@style/WhiteAccent"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <!-- EDITTEXT RESIDENCIA -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/subirPropDescInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subirPropTituloInputLayout"
+            android:layout_above="@id/buttonSubirProp"
+            android:layout_marginBottom="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+
+            app:errorEnabled="true">
+            <EditText
+                android:id="@+id/subirProp_desc_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/ph_subirProp_desc"
+                android:gravity="left|top"
+                android:lines="10"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="propulsar.qroo.PresentationLayer.Activities.TabActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarDetalleProp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="0dp"
+        style="@style/AppThemeNoBar">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:contentDescription="@string/app_name"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="3dp"
+            android:src="@drawable/yonayarit"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:layout_marginTop="?attr/actionBarSize">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+
+        android:gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false">
+            <ImageView
+                android:id="@+id/detPropIconPerfil"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/ic_perfil_v"/>
+            <TextView
+                android:id="@+id/detPropFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/detPropIconPerfil"
+                android:layout_toStartOf="@id/detPropIconPerfil"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/placeholder_fecha"/>
+            <TextView
+                android:id="@+id/detPropSubidaPor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detPropFecha"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@id/detPropIconPerfil"
+                android:layout_toStartOf="@id/detPropIconPerfil"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/vota_subida"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/detPropTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:textSize="28sp"
+            android:text="@string/ph_subirProp_titulo"/>
+        <TextView
+            android:id="@+id/detPropDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:text="@string/ph_subirProp_titulo"/>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/perceView"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_width="300dp"
+            android:layout_height="300dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <android.support.v7.widget.CardView
+                android:id="@+id/detPropRedMuestra"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/buttonRed"/>
+            <TextView
+                android:id="@+id/detPropTitDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="@string/ph_subirProp_titulo"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.v7.widget.CardView
+                android:id="@+id/detPropGreenMuestra"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                app:cardBackgroundColor="@color/colorAccent"/>
+            <TextView
+                android:id="@+id/detPropTitUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="@string/ph_subirProp_titulo"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/buttonAFavor"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="45dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                app:cardBackgroundColor="@color/colorAccent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold"
+                    android:text="@string/vota_afavor"/>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v4.widget.Space
+                android:layout_width="30dp"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/buttonEnContra"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="45dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                app:cardBackgroundColor="@color/buttonRed">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold"
+                    android:text="@string/vota_encontra"/>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
