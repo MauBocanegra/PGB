@@ -49,7 +49,7 @@ public class MyHandler extends NotificationsHandler {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(ctx)
                         .setSmallIcon(R.mipmap.ic_notif_yonayarit)
-                        .setContentTitle("YoNayarit")
+                        .setContentTitle("QRoo")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
                         .setSound(defaultSoundUri)

@@ -132,8 +132,12 @@ public class VotaActivity extends AppCompatActivity implements WS.OnWSRequested{
             swipeArrayAdapter.notifyDataSetChanged();
 
             if(propuestas.size()==0){
+                findViewById(R.id.cardButtonNo).setVisibility(View.GONE);
+                findViewById(R.id.buttonVotarSI).setVisibility(View.GONE);
                 findViewById(R.id.votaNoHay).setVisibility(View.VISIBLE);
             }else{
+                findViewById(R.id.cardButtonNo).setVisibility(View.VISIBLE);
+                findViewById(R.id.buttonVotarSI).setVisibility(View.VISIBLE);
                 findViewById(R.id.votaNoHay).setVisibility(View.GONE);
             }
         }
@@ -217,8 +221,12 @@ public class VotaActivity extends AppCompatActivity implements WS.OnWSRequested{
                     }
 
                     if(newCases.size()==0){
+                        findViewById(R.id.cardButtonNo).setVisibility(View.GONE);
+                        findViewById(R.id.buttonVotarSI).setVisibility(View.GONE);
                         findViewById(R.id.votaNoHay).setVisibility(View.VISIBLE);
                     }else{
+                        findViewById(R.id.cardButtonNo).setVisibility(View.VISIBLE);
+                        findViewById(R.id.buttonVotarSI).setVisibility(View.VISIBLE);
                         findViewById(R.id.votaNoHay).setVisibility(View.GONE);
                     }
 

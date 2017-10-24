@@ -3,6 +3,7 @@ package propulsar.qroo.DomainLayer.Services;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import propulsar.qroo.DomainLayer.WS.WS;
 import retrofit2.Call;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -15,7 +16,8 @@ import retrofit2.http.Part;
 public interface UserClient {
 
     @Multipart
-    @POST("http://testsvcyonayarit.iog.digital/api/Message/SendImageMessages")
+    //@POST("http://testsvcyonayarit.iog.digital/api/Message/SendImageMessages")
+    @POST(WS.WS_URL+"Message/SendImageMessages")
     Call<ResponseBody> uploadPhoto(
             @Part("UserId") RequestBody UserId,
             @Part("DestinationId") RequestBody DestinationId,

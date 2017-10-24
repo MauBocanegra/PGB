@@ -1,6 +1,7 @@
 package propulsar.qroo.PresentationLayer.Frags;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,8 @@ import java.util.Map;
 import propulsar.qroo.DomainLayer.Adapters.NotifAdapter;
 import propulsar.qroo.DomainLayer.Objects.Notifs;
 import propulsar.qroo.DomainLayer.WS.WS;
+import propulsar.qroo.PresentationLayer.Activities.ChatActivity;
+import propulsar.qroo.PresentationLayer.Activities.DetalleCase;
 import propulsar.qroo.R;
 
 /**
@@ -29,7 +32,7 @@ import propulsar.qroo.R;
  * Use the {@link NotifFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefreshLayout.OnRefreshListener{
+public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefreshLayout.OnRefreshListener, NotifAdapter.OnItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -112,7 +115,7 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
         //Case (int id, String folio, String titulo, String categoria,String descripcion, String fecha, int status, int creatorID)
         notifs = new ArrayList<Notifs>();
 
-        mAdapter = new NotifAdapter(notifs);
+        mAdapter = new NotifAdapter(notifs, NotifFrag.this);
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.notifsSwipeRefreshLayout);
 
@@ -169,7 +172,8 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
                     for(int i=0; i<newNotifsJArray.length();i++){
                         JSONObject newNotifJSONObject = newNotifsJArray.getJSONObject(i);
                         Notifs newNotif = new Notifs();
-                        newNotif.setFecha(newNotifJSONObject.getString("InsDate").split("T")[0]);
+                        String[] insSplit = (newNotifJSONObject.getString("InsDate").split("T")[0]).split("-");
+                        newNotif.setFecha(insSplit[2]+"-"+insSplit[1]+"-"+insSplit[0]);
                         newNotif.setId(newNotifJSONObject.getInt("NotificationId"));
                         newNotif.setNotif(newNotifJSONObject.getString("Description"));
 
@@ -177,12 +181,6 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
                     }
 
                     addToList(newNotifs);
-
-                    if(newNotifs.size()==0){
-                        view.findViewById(R.id.notifsNoHay).setVisibility(View.VISIBLE);
-                    }else{
-                        view.findViewById(R.id.notifsNoHay).setVisibility(View.GONE);
-                    }
                 }
             }
         }catch(Exception e){e.printStackTrace();}
@@ -208,6 +206,36 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
         getNotifications(false);
     }
 
+    // --------------------------------------------------------- //
+    // -------------- OnClickItem IMPLEMENTATION --------------- //
+    // --------------------------------------------------------- //
+
+    @Override
+    public void onItemClick(int position) {
+        String notif = notifs.get(position).getNotif();
+        String folio = notif.replaceAll("[^0-9]+","");
+        //Log.d("ClickDebug","Folio="+notif.replaceAll("[^0-9]+","")+" length="+(notif.replaceAll("[^0-9]+","")).length());
+
+        if((notif.replaceAll("[^0-9]+","")).length()>5){
+            //FOLIO
+            Log.d("NotifDebug","Folio");
+            Intent intent = new Intent(getActivity(), DetalleCase.class);
+            intent.putExtra("caseFolio",folio);
+            getActivity().startActivity(intent);
+        }else{
+            if(notif.toLowerCase().contains("mensaje")){
+                //MENSAJE
+                Log.d("NotifDebug","Mensaje");
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
+            }else{
+                //MASIVO
+                Log.d("NotifDebug","Masivo");
+            }
+        }
+    }
+
+
     // ---------------------------------------------------- //
     // -------------- SCROLL IMPLEMENTATION --------------- //
     // ---------------------------------------------------- //
@@ -231,6 +259,14 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
                     if((visibleItemCount+pastVisiblesItems)==totalItemCount){
                         bottomRequested=true;
                         getNotifications(true);
+                    }
+
+                    if(totalItemCount==0){
+                        Log.d("NotifsDebug","Notifs==0 SHOW LEGEND");
+                        view.findViewById(R.id.notifsNoHay).setVisibility(View.VISIBLE);
+                    }else{
+                        Log.d("NotifsDebug","Notifs==1 will hide");
+                        view.findViewById(R.id.notifsNoHay).setVisibility(View.GONE);
                     }
                 }
             }

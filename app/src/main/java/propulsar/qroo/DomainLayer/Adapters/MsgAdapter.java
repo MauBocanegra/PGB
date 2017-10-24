@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import propulsar.qroo.DomainLayer.Objects.Msg;
 import propulsar.qroo.DomainLayer.Objects.OwnMsg;
 import propulsar.qroo.PresentationLayer.Activities.ChatActivity;
+import propulsar.qroo.PresentationLayer.Dialogs.DiagShowOnly;
 import propulsar.qroo.R;
 
 /**
@@ -66,6 +67,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final int pos = position;
         final Context c = holder.link.getContext();
         holder.msg.setText(mDataset.get(position).getMsg());
         holder.fecha.setText(mDataset.get(position).getTimeStamp().split("T")[0]);
@@ -78,38 +80,90 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
             }
         }catch(Exception e){}
 
+        Log.d("mDATASET(GETPOSITION)",mDataset.get(position).toString());
 
+        int msgType=mDataset.get(position).getType();
+        /*
+        1 texto
+        2 ligas
+        3 ubicación
+        4 archivo
+        */
+        if(mDataset.get(position).isBot()){
+            holder.msg.setVisibility(View.VISIBLE);
+            holder.fecha.setVisibility(View.VISIBLE);
+            holder.mapPreview.setVisibility(View.GONE);
+        }
 
-        if(mDataset.get(position).getMsg().length()==0 && mDataset.get(position).getUrl().length()>0){
-            holder.msg.setVisibility(View.GONE);
-            holder.fecha.setVisibility(View.GONE);
-            holder.mapPreview.setVisibility(View.VISIBLE);
-            Picasso.with(activity).load(mDataset.get(position).getUrl()).into(holder.mapPreview);
-        }else {
+        switch (msgType){
+            //Ubicacion
+            case 3:{
+                holder.msg.setVisibility(View.GONE);
+                holder.fecha.setVisibility(View.GONE);
+                holder.mapPreview.setVisibility(View.VISIBLE);
 
-            //Deteccion y presentacion de paginas web
-            Pattern pattern = Pattern.compile("[^ \\s]+\\.[^ \\s\\d]+");
-            Matcher matcher = pattern.matcher(mDataset.get(position).getMsg());
-            if (matcher.find()) {
-                final String urlLink = matcher.group();
-                //holder.divider.setVisibility(View.VISIBLE);
-                //holder.link.setVisibility(View.VISIBLE);
-                String sub1 = mDataset.get(position).getMsg().substring(0, matcher.start());
-                String sub2 = mDataset.get(position).getMsg().substring(matcher.start(), matcher.end());
-                String sub3 = mDataset.get(position).getMsg().substring(matcher.end(), mDataset.get(position).getMsg().length());
-                String underlinedSt = sub1 + "<u><b>" + sub2 + "</b></u>" + sub3;
-                String[] underlinedArr = underlinedSt.split("\n");
-                underlinedSt = "";
-                for (String st : underlinedArr) {
-                    underlinedSt += st + "<br>";
-                }
-                underlinedSt = underlinedSt.substring(0, underlinedSt.length() - 4);
-                holder.msg.setText(Html.fromHtml(underlinedSt));
-                //holder.link.setText(matcher.group());
-                //holder.link.setPaintFlags(holder.link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                holder.msg.setOnClickListener(new View.OnClickListener() {
+                Picasso.with(activity).load("https://maps.googleapis.com/maps/api/staticmap?center=" +mDataset.get(position).getMsg()+ "&zoom=17&size=500x400&maptype=roadmap" + "&markers=color:red%7C" +mDataset.get(position).getMsg()).into(holder.mapPreview);
+                final String loc = mDataset.get(position).getMsg();
+                holder.mapPreview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Uri gmmIntentUri = Uri.parse("geo:" + loc + "?q=" + loc + "(Ubicación definida");
+                        //geo:<lat>,<long>?q=<lat>,<long>(Label+Name)
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        if (mapIntent.resolveActivity(c.getPackageManager()) != null) {
+                            c.startActivity(mapIntent);
+                        }
+                    }
+                });
+                break;
+            }
+
+            case 4:{
+                holder.msg.setVisibility(View.GONE);
+                holder.fecha.setVisibility(View.GONE);
+                holder.mapPreview.setVisibility(View.VISIBLE);
+                Picasso.with(activity).load(mDataset.get(position).getUrl()).into(holder.mapPreview);
+
+                holder.mapPreview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DiagShowOnly diag = new DiagShowOnly();
+                        diag.setImgURL(mDataset.get(pos).getUrl());
+                        diag.show(activity.getSupportFragmentManager(),"");
+                    }
+                });
+                break;
+            }
+
+            case 1:{
+                holder.msg.setVisibility(View.VISIBLE);
+                holder.fecha.setVisibility(View.VISIBLE);
+                holder.mapPreview.setVisibility(View.GONE);
+
+                //Deteccion y presentacion de paginas web
+                Pattern pattern = Pattern.compile("[^ \\s]+\\.[^ \\s\\d]+");
+                Matcher matcher = pattern.matcher(mDataset.get(position).getMsg());
+                if (matcher.find()) {
+                    final String urlLink = matcher.group();
+                    //holder.divider.setVisibility(View.VISIBLE);
+                    //holder.link.setVisibility(View.VISIBLE);
+                    String sub1 = mDataset.get(position).getMsg().substring(0, matcher.start());
+                    String sub2 = mDataset.get(position).getMsg().substring(matcher.start(), matcher.end());
+                    String sub3 = mDataset.get(position).getMsg().substring(matcher.end(), mDataset.get(position).getMsg().length());
+                    String underlinedSt = sub1 + "<u><b>" + sub2 + "</b></u>" + sub3;
+                    String[] underlinedArr = underlinedSt.split("\n");
+                    underlinedSt = "";
+                    for (String st : underlinedArr) {
+                        underlinedSt += st + "<br>";
+                    }
+                    underlinedSt = underlinedSt.substring(0, underlinedSt.length() - 4);
+                    holder.msg.setText(Html.fromHtml(underlinedSt));
+                    //holder.link.setText(matcher.group());
+                    //holder.link.setPaintFlags(holder.link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                    holder.msg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
                     /*
                     Bundle mBundle = new Bundle();
                     if(urlLink.startsWith("http://")||urlLink.startsWith("https://"))
@@ -122,30 +176,51 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                     c.startActivity(intent);
                     */
 
-                        String linkURL = "";
-                        if (urlLink.startsWith("http://") || urlLink.startsWith("https://"))
-                            linkURL = urlLink;
-                        else
-                            linkURL = "http://" + urlLink;
+                            String linkURL = "";
+                            if (urlLink.startsWith("http://") || urlLink.startsWith("https://"))
+                                linkURL = urlLink;
+                            else
+                                linkURL = "http://" + urlLink;
 
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkURL));
-                        c.startActivity(browserIntent);
-                    }
-                });
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkURL));
+                            c.startActivity(browserIntent);
+                        }
+                    });
+                }
+                break;
             }
 
+            case 2:{
+                holder.msg.setVisibility(View.VISIBLE);
+                holder.fecha.setVisibility(View.VISIBLE);
+                holder.mapPreview.setVisibility(View.GONE);
+                break;
+            }
+        }
+
+        /*
+        if(mDataset.get(position).getMsg().length()==0 && mDataset.get(position).getUrl().length()>0){
+            holder.msg.setVisibility(View.GONE);
+            holder.fecha.setVisibility(View.GONE);
+            holder.mapPreview.setVisibility(View.VISIBLE);
+            Picasso.with(activity).load(mDataset.get(position).getUrl()).into(holder.mapPreview);
+        }else {
+        *(
+
+
+
             //Deteccion y presentacion de ubicaciones
+            /*
             Pattern locationPattern = Pattern.compile("\\-?[\\d]+\\.[\\d]+\\,\\-?[\\d]+\\.[\\d]+");
             Matcher locationMatcher = locationPattern.matcher(mDataset.get(position).getMsg());
             if (locationMatcher.find()) {
                 holder.msg.setVisibility(View.GONE);
                 holder.fecha.setVisibility(View.GONE);
                 holder.mapPreview.setVisibility(View.VISIBLE);
-            /*
-            * https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-&markers=color:red%7Clabel:C%7C40.718217,-73.998284
-&key=YOUR_API_KEY*/
+            //https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
+//&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
+//&markers=color:red%7Clabel:C%7C40.718217,-73.998284
+//(&key=YOUR_API_KEY
                 Picasso.with(activity).load("https://maps.googleapis.com/maps/api/staticmap?center=" + locationMatcher.group() + "&zoom=17&size=500x400&maptype=roadmap" + "&markers=color:red%7C" + locationMatcher.group()).into(holder.mapPreview);
                 final String loc = locationMatcher.group();
                 holder.mapPreview.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +236,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                     }
                 });
             }
-        }
+            */
+       // }
 
         Log.d("DebugMsg","["+mDataset.get(position).getMsg()+"]msgLen="+mDataset.get(position).getMsg().length()+" url["+mDataset.get(position).getUrl()+"]Len="+mDataset.get(position).getUrl().length());
 

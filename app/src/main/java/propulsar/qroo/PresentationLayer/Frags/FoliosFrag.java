@@ -180,12 +180,15 @@ public class FoliosFrag extends Fragment implements WS.OnWSRequested, SwipeRefre
                     for(int i=0; i<newCasesJArray.length();i++){
                         JSONObject newNotifJSONObject = newCasesJArray.getJSONObject(i);
                         Case newCase = new Case();
+                        newCase.setTitulo(newNotifJSONObject.getString("Title"));
                         newCase.setFolio(newNotifJSONObject.getString("Folio"));
                         newCase.setDescripcion(newNotifJSONObject.getString("Description"));
-                        newCase.setFecha(newNotifJSONObject.getString("Date").split("T")[0]);
+                        String[] fDate = (newNotifJSONObject.getString("Date").split("T")[0]).split("-");
+                        newCase.setFecha(fDate[2]+"-"+fDate[1]+"-"+fDate[0]);
                         newCase.setId(newNotifJSONObject.getInt("ComplaintId"));
                         newCase.setCategoria(newNotifJSONObject.getString("CategoryDescription"));
                         JSONArray complaintStatus = newNotifJSONObject.getJSONArray("ComplaintsStatus");
+                        if(complaintStatus.length()>0)
                         newCase.setLasStatusColor(
                                 complaintStatus.getJSONObject(complaintStatus.length()-1).getString("StatusColor")
                         );

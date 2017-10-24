@@ -36,6 +36,7 @@ public class DetalleCase extends AppCompatActivity implements WS.OnWSRequested, 
     TextView fecha;
 
     int caseID;
+    String caseFolio;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -70,6 +71,7 @@ public class DetalleCase extends AppCompatActivity implements WS.OnWSRequested, 
         titulo = folio = (TextView)findViewById(R.id.detCase_titulo);
 
         caseID = getIntent().getIntExtra("CaseId",-1);
+        caseFolio = getIntent().getStringExtra("caseFolio");
 
         mRecyclerView = (RecyclerView)findViewById(R.id.statesRecyclerView);
 
@@ -110,14 +112,17 @@ public class DetalleCase extends AppCompatActivity implements WS.OnWSRequested, 
         try {
             ws = json.getInt("ws");
             switch (ws) {
+                case WS.WS_getCaseByFolio:{}
                 case WS.WS_getCaseDetail:{
                     JSONObject data = json.getJSONObject("data");
 
                     folio.setText("Folio: "+data.getString("Folio"));
-                    categoria.setText(data.getString("CategoryDescription"));
+                    //categoria.setText(data.getString("CategoryDescription"));
+                    categoria.setText(data.getString("Title"));
                     desc.setText(data.getString("Description"));
                     fecha.setText(data.getString("Date").split("T")[0]);
-                    titulo.setText(data.getString("Title"));
+                    //titulo.setText(data.getString("Title"));
+                    titulo.setText(data.getString("CategoryDescription"));
                     tipo.setText(data.getString("ComplaintTypeDescription"));
 
                     setDetailsList(data.getJSONArray("ChangeStatus"));
@@ -135,8 +140,13 @@ public class DetalleCase extends AppCompatActivity implements WS.OnWSRequested, 
         int userID = sharedPreferences.getInt("userID",0);
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("UserId",userID);
-        params.put("ComplaintId",caseID);
-        WS.getInstance(DetalleCase.this).getCaseDetail(params,this);
+        if (caseID == -1) {
+            params.put("ComplaintFolio", caseFolio);
+            WS.getInstance(DetalleCase.this).getCaseByFolio(params, this);
+        }else {
+            params.put("ComplaintId", caseID);
+            WS.getInstance(DetalleCase.this).getCaseDetail(params, this);
+        }
     }
 
     private void setDetailsList(JSONArray arrayStates) throws Exception {

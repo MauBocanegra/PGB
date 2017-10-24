@@ -165,6 +165,7 @@ public class BenefsActivity extends AppCompatActivity implements WS.OnWSRequeste
                         //SET BENEFS THINGS
                         newBenef.setId(newBenefJSONObject.getInt("BenefitId"));
                         newBenef.setTitulo(newBenefJSONObject.getString("Title"));
+                        newBenef.setImageUrl(newBenefJSONObject.getString("ImageUrl"));
                         /*
                         newBenef.setFecha(newBenefJSONObject.getString("Date").split("T")[0]);
                         newBenef.setDesc(newBenefJSONObject.getString("Description"));

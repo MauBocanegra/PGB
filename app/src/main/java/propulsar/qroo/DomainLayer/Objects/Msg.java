@@ -13,6 +13,7 @@ public class Msg {
     public String url;
     public boolean isBot;
     public String avatarURL;
+    public int type;
 
     public String getAvatarURL() {
         return avatarURL;
@@ -80,7 +81,15 @@ public class Msg {
         isBot = bot;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public String toString(){
-        return "Sender="+senderId+" Msg="+msg+" timeStamp="+timeStamp;
+        return "Sender="+senderId+" Msg="+msg+" timeStamp="+timeStamp+" type="+type;
     }
 }

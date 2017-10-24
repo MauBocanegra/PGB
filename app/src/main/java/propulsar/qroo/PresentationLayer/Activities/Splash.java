@@ -1,8 +1,10 @@
 package propulsar.qroo.PresentationLayer.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -22,6 +24,12 @@ import propulsar.qroo.R;
 public class Splash extends AppCompatActivity {
 
     @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         ImageView gifDrawable;
         super.onCreate(savedInstanceState);
@@ -38,7 +46,7 @@ public class Splash extends AppCompatActivity {
 
 
         gifDrawable = (ImageView) findViewById(R.id.videoView);
-        Glide.with(this).load(R.drawable.yonayarithd).diskCacheStrategy(DiskCacheStrategy.SOURCE)/*.listener(new RequestListener<String, GlideDrawable>() {
+        Glide.with(this).load(R.drawable.splashqroo3).diskCacheStrategy(DiskCacheStrategy.SOURCE)/*.listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 animationListener.onException();
@@ -98,7 +106,7 @@ public class Splash extends AppCompatActivity {
                     finish();
                 }
             }
-        }, 3600);
+        }, 3400);
 
     }
 

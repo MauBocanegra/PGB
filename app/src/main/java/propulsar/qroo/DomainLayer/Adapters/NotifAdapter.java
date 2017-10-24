@@ -1,6 +1,7 @@
 package propulsar.qroo.DomainLayer.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,14 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder>{
 
     private ArrayList<Notifs> mDataset;
 
-    public NotifAdapter(ArrayList<Notifs> myDataset) {
+    public OnItemClickListener onItemClickListener;
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public NotifAdapter(ArrayList<Notifs> myDataset, OnItemClickListener itemClickListener) {
         mDataset = myDataset;
+        onItemClickListener = itemClickListener;
     }
 
     @Override
@@ -51,10 +58,17 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         try {
             holder.txtTitulo.setText(mDataset.get(position).getNotif());
             holder.txtFecha.setText(mDataset.get(position).getFecha());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(position);
+                }
+            });
         }catch(Exception e){}
     }
 

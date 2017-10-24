@@ -185,6 +185,12 @@ public class WS {
         performRequest(urlString, WS_getCaseDetail, params, GETID, listener);
     }
 
+    public static void getCaseByFolio(Map<String,Object> params, OnWSRequested listener){
+        Log.d("getCaseByFolio", " ----- getCaseByFolioRequested ----- ");
+        String urlString = WS_URL+WS_getCaseByFolioURL;
+        performRequest(urlString, WS_getCaseByFolio, params, GETID, listener);
+    }
+
     public static void getBenefitsList(Map<String,Object> params, OnWSRequested listener){
         Log.d("getBenefitsList", " ----- getBenefitsListRequested ----- ");
         String urlString = WS_URL+WS_getBenefitsListURL;
@@ -269,13 +275,6 @@ public class WS {
         performRequest(urlString, WS_updatePassword, params, POSTID, listener);
     }
 
-    public static void uploadImage(Map<String,Object> params, OnWSRequested listener){
-        Log.d("uploadImage", " ----- uploadImageRequested ----- ");
-        String urlString = "http://svcyonayarit.iog.digital/"+WS_uploadPhotoURL;
-        //performUpload(params);
-        performUpload(urlString, params, listener);
-    }
-
     public static void getOfficerInfo(Map<String,Object> params, OnWSRequested listener){
         Log.d("getOfficerInfo", " ----- getOfficerInfo ----- ");
         String urlString = WS_URL+WS_getOfficerInfoURL;
@@ -317,7 +316,7 @@ public class WS {
                             userID=(String)param.getValue();
                     }
 
-                    URL url = new URL("http://testsvcyonayarit.iog.digital/api/Message/SendImageMessages");
+                    URL url = new URL(WS.WS_URL+"Message/SendImageMessages");
                     Log.d("urlString",url.toString());
                     StringBuilder postData = new StringBuilder();
                     Map<String, Object> params2 = new LinkedHashMap<>();
@@ -477,7 +476,7 @@ public class WS {
                             }
                         }
                         url = new URL(urlString+"/"+restURL);
-                        url = new URL("http://testsvcyonayarit.iog.digital/api/Message/SendImageMessages");
+                        url = new URL(WS.WS_URL+"Message/SendImageMessages");
                         Log.d("urlString","FINALSTRING = "+url.toString());
                     }
                     StringBuilder postData = new StringBuilder();
@@ -761,10 +760,10 @@ public class WS {
     }
 
     //public static final String WS_URL = "http://testsvcyonayarit.iog.digital/api/";
-    public static final String WS_URL = "http://svcyonayarit.iog.digital/api/";
+    //public static final String WS_URL = "http://svcyonayarit.iog.digital/api/";
     //public static final String WS_TEST_URL = "http://testsvcyonayarit.iog.digital/api/";
 
-    //public static final String WS_URL = "http://svcqroo.iog.digital/api/";
+    public static final String WS_URL = "http://svcqroo.iog.digital/api/";
 
     public static final int WS_userSignIn = 100;
     public static final int WS_getMenu = 200;
@@ -794,6 +793,7 @@ public class WS {
     public static final int WS_uploadPhoto=2600;
     public static final int WS_getOfficerInfo=2700;
     public static final int WS_getBotToken=2800;
+    public static final int WS_getCaseByFolio=2900;
 
     private static final int GETID = 10;
     private static final int POSTID = 11;
@@ -827,6 +827,7 @@ public class WS {
     public static final String WS_uploadPhotoURL = "media/UploadPhoto";
     public static final String WS_getOfficerInfoURL = "User/GetBasicProfileOfficial";
     public static final String WS_getBotTokenURL = "Site/GetSiteConfiguration?Name=directLine";
+    public static final String WS_getCaseByFolioURL = "Complaint/GetComplaintDetailWithFolio";
 
     //Usuarios = 1  ciudadano
 }

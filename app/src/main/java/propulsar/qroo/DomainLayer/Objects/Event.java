@@ -98,4 +98,8 @@ public class Event {
     public void setPlace(String place) {
         Place = place;
     }
+
+    public String toString(){
+        return "Title="+Title+" StartTime="+StartTime+" EndTime="+EndTime;
+    }
 }

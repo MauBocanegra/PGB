@@ -121,11 +121,13 @@ public class DetalleBenefActivity extends AppCompatActivity implements WS.OnWSRe
             switch (ws) {
                 case WS.WS_getBenefitDetails: {
                     JSONObject data = json.getJSONObject("data");
-                    ((TextView)findViewById(R.id.detBenefFecha)).setText(data.getString("Date").split("T")[0]);
+                    String[] fBenefSplit = (data.getString("Date").split("T")[0]).split("-");
+                    ((TextView)findViewById(R.id.detBenefFecha)).setText(fBenefSplit[2]+"-"+fBenefSplit[1]+"-"+fBenefSplit[0]);
                     ((TextView)findViewById(R.id.detBenefTitulo)).setText(data.getString("Title"));
+                    String[] fPremio = (data.getString("AwardDate").split("T")[0]).split("-");
                     ((TextView)findViewById(R.id.detBenefDesc)).setText(data.getString("Description")
                     +"\n\n"+"Dinámica de selección: "+data.getString("Dynamic")
-                    +"\n\n"+"Fecha de premiación: "+data.getString("AwardDate").split("T")[0]
+                    +"\n\n"+"Fecha de premiación: "+fPremio[2]+"-"+fPremio[1]+"-"+fPremio[0]
                     +"\n\n"+"Lugar de premiación: "+data.getString("Place")
                     +"\n\n"+"Premio: "+data.getString("Award"));
 

@@ -55,6 +55,7 @@ public class GalleryAdapter extends BaseAdapter {
 
                 Log.d("files","-------------");
 
+                /*
                 int countDCIMFiles=0;
                 for(File fileDCIM : publicDCIMFiles){
                     Log.d("files","DCIM="+fileDCIM.toString());
@@ -70,6 +71,7 @@ public class GalleryAdapter extends BaseAdapter {
                     }
 
                 }
+                */
 
                 int countPublicFiles=0;
                 for(File filePIC : publicPICSFiles){
@@ -81,12 +83,14 @@ public class GalleryAdapter extends BaseAdapter {
                                 files.add(innerArchsPIC);
                                 countPublicFiles++;
                             }
-                            if(countPublicFiles>=15){break;}
+                            if(countPublicFiles>=20){break;}
                         }
                     }
                 }
 
                 Log.d("files","# ALLFiles="+files.size());
+
+
 
                 //images = new ArrayList<File>();
                 imagesPath = new ArrayList<String>();

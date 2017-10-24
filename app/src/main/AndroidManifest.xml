@@ -4,13 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="propulsar.qroo">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
     <application
         android:name=".DomainLayer.Objects.AnalyticsApplication"
@@ -24,97 +25,97 @@
         <!-- AIzaSyD2Xl4K93_3bPLnlTEHBqlJe3CCLzOuNyg awerenessApi-->
         <meta-data
             android:name="com.google.android.awareness.API_KEY"
-            android:value="AIzaSyD2Xl4K93_3bPLnlTEHBqlJe3CCLzOuNyg"/>
+            android:value="AIzaSyBmA7ld5pv8BJipjo-egfVXLaOJgYHVaTs"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD2Xl4K93_3bPLnlTEHBqlJe3CCLzOuNyg" />
+            android:value="AIzaSyCFOFGzzZfrkqbVH5uFFHzRsRA-HqQFpLI" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"/>
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider254162375008188"
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1824994251147484"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_notif_yonayarit" />
+            android:resource="@mipmap/ic_notif_yonayarit"/>
         <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
+            android:resource="@color/colorAccent"/>
 
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"/>
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="@string/fb_login_protocol_scheme"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".PresentationLayer.Activities.Splash"
             android:theme="@style/AppThemeNoBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".PresentationLayer.Activities.Login"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.TabActivity"
             android:label="@string/title_activity_tab"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.VotaActivity"
             android:parentActivityName=".PresentationLayer.Activities.TabActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.SubirPropActivity"
             android:parentActivityName=".PresentationLayer.Activities.VotaActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.PropsVotadas"
             android:parentActivityName=".PresentationLayer.Activities.VotaActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.EventActivity"
             android:parentActivityName=".PresentationLayer.Activities.TabActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.BenefsActivity"
             android:parentActivityName=".PresentationLayer.Activities.TabActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.DetalleBenefActivity"
             android:parentActivityName=".PresentationLayer.Activities.BenefsActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.ChatActivity"
             android:parentActivityName=".PresentationLayer.Activities.TabActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.DetalleProp"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.DetalleCase"
             android:parentActivityName=".PresentationLayer.Activities.TabActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.RegisterActivity"
             android:parentActivityName=".PresentationLayer.Activities.Login"
@@ -122,7 +123,7 @@
         <activity
             android:name=".PresentationLayer.Activities.SurveyActivity"
             android:parentActivityName=".PresentationLayer.Activities.BenefsActivity"
-            android:theme="@style/AppThemeNoBar" />
+            android:theme="@style/AppThemeNoBar"/>
         <activity
             android:name=".PresentationLayer.Activities.WebViewActivity"
             android:parentActivityName=".PresentationLayer.Activities.TabActivity"
@@ -173,7 +174,7 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="propulsar.yonayarit" />
+                <category android:name="propulsar.qroo" />
             </intent-filter>
         </receiver>
 

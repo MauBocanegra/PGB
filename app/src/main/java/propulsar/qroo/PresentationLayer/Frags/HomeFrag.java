@@ -176,15 +176,18 @@ public class HomeFrag extends Fragment implements WS.OnWSRequested{
                 case WS.WS_getMenu: {
                     JSONObject data = json.getJSONObject("data");
                     view.findViewById(R.id.progressBenefit).setVisibility(View.GONE);
-                    ((TextView)view.findViewById(R.id.fechaBenefit)).setText(data.getString("EventStartTime").split("T")[0]);
+                    String[] fEventSplit = (data.getString("EventStartTime").split("T")[0]).split("-");
+                    ((TextView)view.findViewById(R.id.fechaBenefit)).setText(fEventSplit[2]+"-"+fEventSplit[1]+"-"+fEventSplit[0]);
                     ((TextView)view.findViewById(R.id.tituloBenefit)).setText(data.getString("EventTitle"));
                     eventID = data.getInt("EventId");
                     view.findViewById(R.id.progressVotada).setVisibility(View.GONE);
-                    ((TextView)view.findViewById(R.id.fechaVotada)).setText(data.getString("ProposalCreatedAt").split("T")[0]);
+                    String [] fPropSplit = (data.getString("ProposalCreatedAt").split("T")[0]).split("-");
+                    ((TextView)view.findViewById(R.id.fechaVotada)).setText(fPropSplit[2]+"-"+fPropSplit[1]+"-"+fPropSplit[0]);
                     ((TextView)view.findViewById(R.id.tituloVotada)).setText(data.getString("ProposalTitle"));
                     proposalID = data.getInt("ProposalId");
                     view.findViewById(R.id.progressEncuesta).setVisibility(View.GONE);
-                    ((TextView)view.findViewById(R.id.fechaEncuesta)).setText(data.getString("BenefitDate").split("T")[0]);
+                    String [] fBeneSplit = (data.getString("BenefitDate").split("T")[0]).split("-");
+                    ((TextView)view.findViewById(R.id.fechaEncuesta)).setText(fBeneSplit[2]+"-"+fBeneSplit[1]+"-"+fBeneSplit[0]);
                     ((TextView)view.findViewById(R.id.tituloEncuesta)).setText(data.getString("BenefitTitle"));
                     benefitID=data.getInt("BenefitId");
 

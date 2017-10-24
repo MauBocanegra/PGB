@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.HitBuilders;
@@ -267,6 +268,11 @@ public class Login extends AppCompatActivity implements
                     editor.putString("email",data.getString("Email"));
                     editor.putBoolean("loggedIn",true);
                     editor.commit();
+                    String messageToShow=null;
+                    try{
+                        messageToShow=data.getString("Message");
+                    }catch(Exception e){}
+                    Toast.makeText(this, messageToShow==null ? getString(R.string.iniOKLogin) : messageToShow, Toast.LENGTH_SHORT).show();
                     Log.d("DEB DATA","id="+data.getInt("UserId")+" correo="+data.getString("Email"));
                     Intent intent = new Intent(getApplicationContext(), TabActivity.class);
                     startActivity(intent);
@@ -289,6 +295,8 @@ public class Login extends AppCompatActivity implements
                     Log.d("UserSignIn","UserSignIn = "+data.getInt("UserId"));
                     editor.putBoolean("loggedIn",true);
                     editor.commit();
+
+                    Toast.makeText(this, data.getString("Message"), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), TabActivity.class);
                     startActivity(intent);
                     break;

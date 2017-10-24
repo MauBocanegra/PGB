@@ -40,6 +40,13 @@
                 android:textColor="@color/textColorSecondary"
                 android:text="@string/button_home_vota"/>
 
+            <View
+                android:layout_alignParentEnd="true"
+                android:layout_width="1dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="match_parent"
+                android:background="#EEE"/>
+
 
         </RelativeLayout>
 
@@ -100,9 +107,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceMedium"
+                android:textAppearance="?android:textAppearanceSmall"
                 android:layout_below="@id/iconButtonHomeBenef"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/textColorSecondary"
                 android:text="@string/button_home_benef"/>
@@ -178,15 +185,17 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fechaBenefit"
                     android:layout_alignParentBottom="true"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
+                    android:textStyle="bold"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="20dp"
                     android:padding="5dp"
                     android:textColor="#EEE"
-                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textAppearance="?android:textAppearanceMedium"
                     android:text="@string/placeholder_titulo_benefit"/>
 
             </RelativeLayout>
@@ -243,9 +252,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@id/fechaVotada"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="5dp"
-                    android:textAppearance="?android:textAppearanceLarge"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
+                    android:textAppearance="?android:textAppearanceMedium"
                     android:text="@string/placeholder_titulo_vota"/>
 
             </RelativeLayout>
@@ -302,9 +315,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@id/fechaEncuesta"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginStart="5dp"
-                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
                     android:text="@string/placeholder_titulo_encuesta"/>
 
             </RelativeLayout>

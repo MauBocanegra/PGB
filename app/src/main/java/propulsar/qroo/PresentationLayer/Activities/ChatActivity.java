@@ -1,13 +1,22 @@
 package propulsar.qroo.PresentationLayer.Activities;
 
 import android.animation.Animator;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -15,17 +24,22 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.view.inputmethod.InputMethodManager;
@@ -35,8 +49,12 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.awareness.Awareness;
@@ -56,10 +74,16 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -74,6 +98,7 @@ import propulsar.qroo.DomainLayer.Objects.OwnMsg;
 import propulsar.qroo.DomainLayer.Services.UserClient;
 import propulsar.qroo.DomainLayer.WS.BotWS;
 import propulsar.qroo.DomainLayer.WS.WS;
+import propulsar.qroo.PresentationLayer.Dialogs.DiagShowImg;
 import propulsar.qroo.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,6 +118,7 @@ public class ChatActivity extends AppCompatActivity implements
     private SwipeRefreshLayout swipeRefreshLayout;
 
     final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION=123;
+    final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE=334;
     final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE=321;
     final int MY_PERMISSIONS_REQUEST_CAMERA=231;
     final int PHOTO_ACTIVITY_REQUEST=31;
@@ -145,6 +171,7 @@ public class ChatActivity extends AppCompatActivity implements
     private GalleryAdapter mGalleryAdapter;
     private GridView gallery;
     private View progressGalleryLoaded;
+    DiagShowImg diag;
 
     private int visibleItemCount;
     private int totalItemCount;
@@ -174,6 +201,16 @@ public class ChatActivity extends AppCompatActivity implements
             }
 
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showGallery();
+                }else{
+                    (WS.getInstance(ChatActivity.this)).showSucces("Para enviar una imágen debes permitir el acceso a tus archivos",buttonImg);
+                }
+                return;
+            }
+
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE:{
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showGallery();
@@ -312,6 +349,7 @@ public class ChatActivity extends AppCompatActivity implements
         findViewById(R.id.buttonChat_staff).setOnClickListener(chatSwitcherListener());
 
         findViewById(R.id.buttonChat_bot).callOnClick();
+        //findViewById(R.id.buttonChat_staff).callOnClick();
     }
 
     @Override
@@ -430,24 +468,25 @@ public class ChatActivity extends AppCompatActivity implements
                 }else{
                     //messages = respBot;
 
-                    messages.clear();
-                    for(Msg msg : respBot){
-                        messages.add(msg);
-                    }
-
                     if(messages.size()==0){
                         Msg newMsg = new OtherMsg();
                         newMsg.setId(-1);
                         newMsg.setSenderId(3);
                         newMsg.setMsg("¡Hola! Mi nombre es Probot" +
-                                "\nSoy el Chatbot inteligente de YoNayarit y te puedo" +
+                                "\nSoy el Chatbot inteligente de "+getResources().getString(R.string.app_name)+" y te puedo" +
                                 " ayudar a generar de manera INMEDIATA Denuncias, Sugerencias, Quejas y Consultar " +
                                 "el estatus de tus casos." +
                                 "\n¿Qué deseas hacer?");
                         newMsg.setTimeStamp(" T ");
+                        newMsg.setType(1);
                         newMsg.setUrl("");
                         newMsg.setBot(true);
-                        messages.add(newMsg);
+                        respBot.add(newMsg);
+                    }
+
+                    messages.clear();
+                    for(Msg msg : respBot){
+                        messages.add(msg);
                     }
 
                     mAdapter.notifyDataSetChanged();
@@ -461,7 +500,7 @@ public class ChatActivity extends AppCompatActivity implements
 
         Intent pickIntent = new Intent(Intent.ACTION_PICK);
         pickIntent.setType("image/*");
-        Intent chooserIntent = Intent.createChooser(pickIntent, "Seleccionar imágen");
+        Intent chooserIntent = Intent.createChooser(pickIntent, "Seleccionar imagen");
         startActivityForResult(chooserIntent, GALLERY_CHOOSER);
     }
 
@@ -493,6 +532,14 @@ public class ChatActivity extends AppCompatActivity implements
             ActivityCompat.requestPermissions(ChatActivity.this,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }else if(ContextCompat.checkSelfPermission(ChatActivity.this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions(ChatActivity.this,
+                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
         }else{
             showGallery();
         }
@@ -506,6 +553,7 @@ public class ChatActivity extends AppCompatActivity implements
 
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, String fileLocation){
+        swipeRefreshLayout.setRefreshing(true);
         File file = new File(fileLocation);
 
         Log.d("asdfg","mimeType = "+getMimeType(fileLocation));
@@ -530,13 +578,80 @@ public class ChatActivity extends AppCompatActivity implements
         return type;
     }
 
+    private String saveImage(Bitmap finalBitmap) {
+
+        String locationDir="";
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/saved_images");
+        myDir.mkdirs();
+
+        String fname = "Image-"+ 1000 +".png";
+        File file = new File (myDir, fname);
+        if (file.exists ()) file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+            locationDir = root+"/saved_images/"+fname;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return locationDir;
+    }
+
+    private void rewriteCompressedImg(String fileLocation){
+        try {
+            Glide
+                    .with(ChatActivity.this)
+                    .load(new File(fileLocation)).asBitmap()
+                    .fitCenter()
+                    .into(new SimpleTarget<Bitmap>(800,1200) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            // Possibly runOnUiThread()
+                            uploadFileRetrofit(saveImage(resource));
+                            /*
+                            ByteArrayOutputStream out = new ByteArrayOutputStream();
+                            resource.compress(Bitmap.CompressFormat.PNG, 50, out);
+                            Bitmap decoded = BitmapFactory.decodeStream(
+                                    new ByteArrayInputStream(
+                                            out.toByteArray()));
+                            try {
+                                FileOutputStream fos = ChatActivity.this.openFileOutput("imgToSend", Context.MODE_PRIVATE);
+                                decoded.compress(Bitmap.CompressFormat.PNG, 50, fos);
+                                fos.close();
+                            }catch(Exception e){e.printStackTrace();}
+
+                            if(decoded!=null){
+                                Log.d("WHAAAAAT","Is it true?");
+                                String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+                                OutputStream outStream = null;
+
+                                File file = new File("imgToSend" + ".png");
+                                if (file.exists()) {
+                                    file.delete();
+                                    file = new File(extStorageDirectory, "/imgToSend" + ".png");
+                                    Log.e("file exist", extStorageDirectory+ "/imgToSend" + ".png");
+                                }
+                                Log.e("file new", ""+extStorageDirectory+ "/imgToSend" + ".png");
+                                uploadFileRetrofit(extStorageDirectory+"/imgToSend" + ".png");
+                            }
+                            */
+                        }
+                    });
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private void uploadFileRetrofit(String fileLocation){
+
         File file = new File(fileLocation);
 
         //Create retrofit instance
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://testsvcyonayarit.iog.digital/api/Message/SendImageMessages/")
+                .baseUrl(WS.WS_URL+"Message/SendImageMessages/")
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
@@ -556,8 +671,10 @@ public class ChatActivity extends AppCompatActivity implements
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("asdfg","CORRECTO");
+                Log.d("ImageDebug","CORRECTO CALL = "+call.request().toString()+" response = "+response.toString());
                 //Toast.makeText(ChatActivity.this, "YES!", Toast.LENGTH_SHORT).show();
+                diag.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
 
                 hideGallery();
                 getMessages(false);
@@ -565,7 +682,8 @@ public class ChatActivity extends AppCompatActivity implements
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("asdfg","ERROR");
+                Log.d("asdfg","ERROR "+call.toString());
+                t.printStackTrace();
                 //Toast.makeText(ChatActivity.this, "NO", Toast.LENGTH_SHORT).show();
             }
         });
@@ -587,9 +705,14 @@ public class ChatActivity extends AppCompatActivity implements
             mGalleryAdapter.setGalleryLoadedListener(ChatActivity.this);
             gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, final View view, int i, long l) {
+                public void onItemClick(AdapterView<?> adapterView, final View viewImg, int i, long l) {
 
+/*
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    LayoutInflater factory = LayoutInflater.from(ChatActivity.this);
+                    final View alertDialogView = factory.inflate(R.layout.alertdialog_confirm_image, null);
+                    Picasso.with(ChatActivity.this).load(((ImageView)view).getTag().toString()).into((ImageView)alertDialogView.findViewById(R.id.imageToSendDialog));
+                    builder.setView(alertDialogView);
 
                     builder.setTitle("¿Deseas enviar la imagen seleccionada?");
                     // Add the buttons
@@ -607,7 +730,20 @@ public class ChatActivity extends AppCompatActivity implements
                     // Create the AlertDialog
                     AlertDialog dialog = builder.create();
 
-                    dialog.show();
+                    //dialog.show();
+                    */
+
+                    diag = new DiagShowImg();
+                    diag.setImgURLandListener(((ImageView) viewImg).getTag().toString(), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            final String tag = ((ImageView)viewImg).getTag().toString();
+                            Log.d("UPLOADING","------- requested : "+tag);
+                            rewriteCompressedImg(tag);
+                        }
+                    });
+                    diag.show(getSupportFragmentManager(),"");
+
                 }
             });
         }
@@ -988,6 +1124,7 @@ public class ChatActivity extends AppCompatActivity implements
                         newMsg.setMsg(newMsgJSONObject.getString("Text"));
                         newMsg.setTimeStamp(newMsgJSONObject.getString("CreatedAt"));
                         newMsg.setUrl(newMsgJSONObject.getString("Url"));
+                        newMsg.setType(newMsgJSONObject.getInt("MessageTypeId"));
 
                         newMsgs.add(newMsg);
                     }
@@ -1101,12 +1238,14 @@ public class ChatActivity extends AppCompatActivity implements
                             newMsg.setMsg(jsonMsg.getString("text"));
                             newMsg.setTimeStamp(" T ");
                             newMsg.setUrl("");
+                            newMsg.setType(1);
                             newMsg.setBot(true);
                             respBot.add(0,newMsg);
                         } catch(NumberFormatException nfe) {
                             //System.out.println("Could not parse " + nfe);
                             Msg newMsg = new OtherMsg();
                             newMsg.setSenderId(3);
+                            newMsg.setType(1);
                             newMsg.setMsg(jsonMsg.getString("text"));
                             newMsg.setTimeStamp(" T ");
                             newMsg.setUrl("");
@@ -1136,6 +1275,41 @@ public class ChatActivity extends AppCompatActivity implements
             }
         }catch(Exception e){
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Intent pickIntent = new Intent(Intent.ACTION_PICK);
+        Log.d("ActivityResult","GalleryChooser ? "+(requestCode==GALLERY_CHOOSER ? "YES" :"NO"));
+
+        if(requestCode==GALLERY_CHOOSER && resultCode== Activity.RESULT_OK){
+            try{
+
+                Uri uri = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+                if (cursor.moveToFirst()) {
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    final String filePath = cursor.getString(columnIndex);
+                    Log.d("DEBUGESTEXD","filePath="+filePath);
+                    Log.d("UPLOADING","------- requested : "+filePath);
+
+                    diag = new DiagShowImg();
+                    diag.setImgURLandListener(filePath, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d("HAHA","Enviar...");
+                            rewriteCompressedImg(filePath);
+                        }
+                    });
+                    diag.show(getSupportFragmentManager(),"");
+
+                    //uploadFileRetrofit(filePath);
+                }
+                cursor.close();
+            }catch(Exception e){e.printStackTrace();}
         }
     }
 

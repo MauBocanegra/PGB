@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">YoNayarit</string>
-    <string name="facebook_app_id">254162375008188</string>
-    <string name="fb_login_protocol_scheme">fb254162375008188</string>
+    <string name="app_name">ConectaQRoo</string>
+    <string name="facebook_app_id">1824994251147484</string>
+    <string name="fb_login_protocol_scheme">fb1824994251147484</string>
     <string name="title_activity_login">Login</string>
 
-    <string name="sharedPrefName">SharedPrefYoNayarit</string>
+    <string name="sharedPrefName">SharedPrefQRoo</string>
 
     <string name="login_string_obien">o bien</string>
     <string name="login_string_obien2">o ingresa con tu correo </string>
@@ -12,11 +12,16 @@
     <string name="iniSesion">Iniciar sesión</string>
     <string name="hintCorreo">E-mail</string>
     <string name="hintContra">Contraseña</string>
+    <string name="iniOKFacebook">Ingreso con Facebook exitoso</string>
+    <string name="iniOKLogin">Inicio de sesión exitoso</string>
+    <string name="iniOKRegistro">¡Cuenta creada exitosamente! Inicio de sesión automático</string>
+    <string name="menu_social_fb">Facebook</string>
+    <string name="menu_social_tw">Twitter</string>
     <string name="title_activity_tab">TabActivity</string>
 
     <string name="button_home_vota">Vota</string>
     <string name="button_home_cuenta">Cuéntanos</string>
-    <string name="button_home_benef">Beneficios</string>
+    <string name="button_home_benef">Oportunidades</string>
     <string name="placeholder_fecha">00/00/0000</string>
     <!--
     <string name="placeholder_titulo_benefit">¡Domingo sin carro!</string>
@@ -49,6 +54,7 @@
     <string name="vota_afavor">A FAVOR</string>
     <string name="vota_subida">Subida por Cynthia</string>
     <string name="vota_titulo">Propuesta</string>
+    <string name="vota_otras">Ver otras propuestas</string>
 
     <string name="ph_subirProp_titulo">Título propuesta</string>
     <string name="ph_subirProp_desc">Descripción propuesta</string>
@@ -68,7 +74,7 @@
     <string name="ph_events_desc"></string>
 
     <string name="chat_tocaaqui">Ir a: </string>
-    <string name="chat_bot">ProBot</string>
+    <string name="chat_bot">Probot</string>
     <string name="chat_user">Staff</string>
     <string name="enviar_ubi">Enviar esta ubicación</string>
     <string name="chat_obteniendogaleria">Cargando tus archivos...</string>
@@ -101,9 +107,9 @@
     <string name="login_recuperar">Recuperar contraseña</string>
     <string name="contramenu">Recuperar contraseña</string>
 
-    <string name="survey_contestar">CONTESTAR</string>
+    <string name="survey_contestar">Enviar</string>
 
-    <string name="vota_nohay">No hay propuestas pendientes por votar</string>
+    <string name="vota_nohay">No quedan propuestas por votar</string>
     <string name="eventos_nohay">Espera los eventos que vendrán próximamente</string>
     <string name="benefs_nohay">¡Pronto habrá nuevos beneficios por disfrutar!</string>
     <string name="votadas_nohay">Aún no has votado por ninguna propuesta</string>
@@ -123,5 +129,6 @@
     </string-array>
     <string name="prompt_genero">Géneros</string>
     <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="urlShortnerKey">AIzaSyBAAo16PbIPn5P_R8D7NYetQjfeEVwDuAk</string>
 
 </resources>

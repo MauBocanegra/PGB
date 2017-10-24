@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.google.android.gms.analytics.HitBuilders;
@@ -203,6 +204,8 @@ public class RegisterActivity extends AppCompatActivity implements
                         WS.getInstance(RegisterActivity.this).showMessage(data.getString("ErrorMessage"), RegisterActivity.this);
                         return;
                     }
+
+                    Toast.makeText(this, getString(R.string.iniOKRegistro), Toast.LENGTH_SHORT).show();
 
                     SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.sharedPrefName), 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

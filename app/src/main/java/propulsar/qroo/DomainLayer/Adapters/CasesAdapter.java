@@ -40,9 +40,11 @@ public class CasesAdapter extends RecyclerView.Adapter<CasesAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.txtFolio.setText(mDataset.get(position).getFolio());
-        holder.txtCategoria.setText(mDataset.get(position).getCategoria());
+        holder.txtCategoria.setText(mDataset.get(position).getTitulo());
         holder.txtFecha.setText(mDataset.get(position).getFecha());
-        holder.circle.setBackgroundColor(Color.parseColor(mDataset.get(position).getLasStatusColor()));
+        try {
+            holder.circle.setBackgroundColor(Color.parseColor(mDataset.get(position).getLasStatusColor()));
+        }catch(Exception e){e.printStackTrace();}
     }
 
     @Override
