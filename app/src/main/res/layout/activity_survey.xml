@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="propulsar.qroo.PresentationLayer.Activities.SurveyActivity">
+    tools:context="propulsar.pgb.presentationlayer.activities.SurveyActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarSurvey"
@@ -16,11 +16,11 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:contentDescription="@string/app_name"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingTop="3dp"
-            android:src="@drawable/yonayarit"/>
+            android:layout_marginRight="48dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/yonayarit" />
 
     </android.support.v7.widget.Toolbar>
 

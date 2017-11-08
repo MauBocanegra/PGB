@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:padding="@dimen/activity_vertical_margin"
-    tools:context="propulsar.qroo.PresentationLayer.Frags.PerfilFrag">
+    tools:context="propulsar.pgb.presentationlayer.Frags.PerfilFrag">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="propulsar.qroo.PresentationLayer.Activities.TabActivity">
+    tools:context="propulsar.pgb.presentationlayer.activities.TabActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarDetalleBenefs"
@@ -18,11 +18,11 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:contentDescription="@string/app_name"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingTop="3dp"
-            android:src="@drawable/yonayarit"/>
+            android:layout_marginRight="48dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/yonayarit" />
 
     </android.support.v7.widget.Toolbar>
 

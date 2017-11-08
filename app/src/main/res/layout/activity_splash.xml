@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="propulsar.qroo.PresentationLayer.Activities.Splash">
+    tools:context="propulsar.pgb.presentationlayer.activities.Splash">
 
     <ImageView
         android:id="@+id/videoView"

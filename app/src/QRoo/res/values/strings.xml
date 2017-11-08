@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ServicesLink">http://svcqroo.iog.digital/api/</string>
+    <string name="app_name">ConectaQRoo</string>
+    <string name="facebook_app_id">1824994251147484</string>
+    <string name="fb_login_protocol_scheme">fb1824994251147484</string>
+    <string name="sharedPrefName">SharedPrefQRoo</string>
+
+    <string name="awareness_APIKEY">AIzaSyBmA7ld5pv8BJipjo-egfVXLaOJgYHVaTs</string>
+    <string name="geo_APIKEY">AIzaSyCFOFGzzZfrkqbVH5uFFHzRsRA-HqQFpLI</string>
+
+    <string name="android_authorities_facebook">"com.facebook.app.FacebookContentProvider1824994251147484"</string>
+</resources>

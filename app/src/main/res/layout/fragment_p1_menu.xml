@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="propulsar.qroo.PresentationLayer.P1MenuFrag"
+    tools:context="propulsar.pgb.presentationlayer.P1MenuFrag"
     android:id="@+id/menuFrameLayout">
 
 </FrameLayout>

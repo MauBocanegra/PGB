@@ -1,10 +1,7 @@
 <resources>
-    <string name="app_name">ConectaQRoo</string>
-    <string name="facebook_app_id">1824994251147484</string>
-    <string name="fb_login_protocol_scheme">fb1824994251147484</string>
-    <string name="title_activity_login">Login</string>
 
-    <string name="sharedPrefName">SharedPrefQRoo</string>
+
+    <string name="title_activity_login">Login</string>
 
     <string name="login_string_obien">o bien</string>
     <string name="login_string_obien2">o ingresa con tu correo </string>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ServicesLink">http://svcjala.iog.digital/api/</string>
+    <string name="app_name">Jala</string>
+    <string name="facebook_app_id">1576573129055668</string>
+    <string name="fb_login_protocol_scheme">fb1576573129055668</string>
+    <string name="sharedPrefName">SharedPrefJala</string>
+
+    <string name="awareness_APIKEY">AIzaSyBCLkXrq2RgMOe9lhaN3-kIjtmpDa5n3VI</string>
+    <string name="geo_APIKEY">AIzaSyBdXUAfeSFbvaYZAjWLcPNzSrohEHP8Lok</string>
+
+    <string name="android_authorities_facebook">"com.facebook.app.FacebookContentProvider1576573129055668"</string>
+</resources>

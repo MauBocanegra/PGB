@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:animateLayoutChanges="true"
-    tools:context="propulsar.qroo.PresentationLayer.Activities.TabActivity">
+    tools:context="propulsar.pgb.presentationlayer.activities.TabActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarChat"
@@ -19,11 +19,11 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:contentDescription="@string/app_name"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingTop="3dp"
-            android:src="@drawable/yonayarit"/>
+            android:layout_marginRight="48dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/yonayarit" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -190,17 +190,18 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:animateLayoutChanges="true"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tituloAccion"
                         android:visibility="visible"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/textColorPrimary"
                         android:gravity="center"
                         android:text="@string/enviar_ubi"
+                        android:layout_centerVertical="true"
                         android:textStyle="bold"
                         android:textAppearance="?android:textAppearanceMedium"/>
 
@@ -212,13 +213,14 @@
                         android:layout_margin="10dp"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="4dp"
-                        android:layout_height="match_parent">
-                        <propulsar.qroo.PresentationLayer.CustomViews.EditTextCampo
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content">
+                        <propulsar.pgb.presentationlayer.CustomViews.EditTextCampo
                             android:animateLayoutChanges="true"
                             android:id="@+id/editText_mensaje"
                             android:layout_width="match_parent"
-                            android:padding="10dp"
-                            android:maxLines="6"
+                            android:padding="5dp"
+                            android:maxLines="4"
                             android:scrollbars="vertical"
                             android:inputType="textMultiLine|textCapSentences"
                             android:layout_height="wrap_content"

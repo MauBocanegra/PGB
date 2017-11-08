@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="propulsar.qroo.PresentationLayer.Activities.WebViewActivity">
+    tools:context="propulsar.pgb.presentationlayer.activities.WebViewActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarWeb"
@@ -13,14 +13,6 @@
         android:background="?attr/colorPrimary"
         android:elevation="0dp"
         style="@style/AppThemeNoBar">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:contentDescription="@string/app_name"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="3dp"
-            android:src="@drawable/yonayarit"/>
 
     </android.support.v7.widget.Toolbar>
 
