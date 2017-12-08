@@ -29,15 +29,18 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/fbRegistrate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/colorAccent"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp">
         <TextView
             android:id="@+id/buttonRegistrate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             android:textStyle="bold"
             android:padding="10dp"
@@ -62,16 +65,19 @@
         <!-- FACEBOOK LOGIN BUTTON-->
         <android.support.v7.widget.CardView
             android:id="@+id/fbLoginButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             app:cardBackgroundColor="@color/com_facebook_blue"
+            android:gravity="center"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_margin="10dp">
                 <ImageView
                     android:id="@+id/fbIcon"
@@ -112,6 +118,7 @@
             android:id="@+id/inputLayoutCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/WhiteAccent"
             app:errorEnabled="true">
             <propulsar.pgb.presentationlayer.CustomViews.EditTextCorreo
                 android:id="@+id/editTextCorreo"
@@ -133,6 +140,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:theme="@style/WhiteAccent"
                 app:errorEnabled="true">
                 <EditText
                     android:id="@+id/editTextContra"
@@ -168,16 +176,18 @@
         <!-- MAIL LOGIN BUTTON-->
         <android.support.v7.widget.CardView
             android:id="@+id/buttonLoginNormal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             app:cardBackgroundColor="@color/colorAccent"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:layout_margin="10dp">
                 <TextView
                     android:layout_width="wrap_content"

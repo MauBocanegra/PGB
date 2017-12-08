@@ -84,6 +84,7 @@ import propulsar.pgb.domainlayer.WS.BotWS;
 import propulsar.pgb.domainlayer.WS.WS;
 import propulsar.pgb.presentationlayer.Dialogs.DiagShowImg;
 import propulsar.pgb.R;
+import propulsar.pgb.presentationlayer.Frags.NotifFrag;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -95,6 +96,11 @@ public class ChatActivity extends AppCompatActivity implements
         BotWS.OnBotWSRequested,
         OnMapReadyCallback,
         GalleryAdapter.GalleryLoadedListener{
+
+    //region DECLARATIONS
+    // ------------------------------------------------- //
+    // ----------------- DECLARATIONS ------------------ //
+    // ------------------------------------------------- //
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -161,6 +167,7 @@ public class ChatActivity extends AppCompatActivity implements
     private int totalItemCount;
     private int pastVisiblesItems;
     private boolean topRequested=false;
+    //end region
 
     //region LIFE CYCLE
     // ----------------------------------------------- //
@@ -338,7 +345,13 @@ public class ChatActivity extends AppCompatActivity implements
         findViewById(R.id.buttonChat_bot).setOnClickListener(chatSwitcherListener());
         findViewById(R.id.buttonChat_staff).setOnClickListener(chatSwitcherListener());
 
-        findViewById(R.id.buttonChat_bot).callOnClick();
+        if(getIntent().getIntExtra(NotifFrag.keyChatOrBot,NotifFrag.keyGoToBot)==NotifFrag.keyGoToChat){
+            findViewById(R.id.buttonChat_staff).callOnClick();
+        }else{
+            findViewById(R.id.buttonChat_bot).callOnClick();
+        }
+
+        //findViewById(R.id.buttonChat_bot).callOnClick();
         //findViewById(R.id.buttonChat_staff).callOnClick();
     }
 

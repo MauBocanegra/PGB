@@ -5,7 +5,11 @@ android {
     buildToolsVersion "27.0.0"
     defaultConfig {
 
-    /*
+        minSdkVersion 19
+        targetSdkVersion 27
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        /*
         applicationId "propulsar.jala"
         minSdkVersion 19
         targetSdkVersion 27
@@ -35,22 +39,32 @@ android {
             applicationId 'propulsar.jala'
             targetSdkVersion 27
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 13
-            versionName '1.7.6'
-
+            versionCode 1
+            versionName '1.0'
             multiDexEnabled true
+            buildConfigField ("boolean", "sanblasBoolean", "false")
         }
-
         QRoo {
             dimension "full"
             minSdkVersion 19
             applicationId 'propulsar.qroo'
             targetSdkVersion 27
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 13
-            versionName '1.7.6'
-
+            versionCode 16
+            versionName '1.7.9'
             multiDexEnabled true
+            buildConfigField ("boolean", "sanblasBoolean", "false")
+        }
+        SanBlas {
+            dimension "full"
+            minSdkVersion 19
+            applicationId 'propulsar.sanblas'
+            targetSdkVersion 27
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 2
+            versionName '1.1'
+            multiDexEnabled true
+            buildConfigField ("boolean", "sanblasBoolean", "true")
         }
     }
 }
@@ -65,27 +79,27 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.lorentzos.swipecards:library:1.0.9'
-    compile 'com.google.android.gms:play-services-gcm:11.4.2'
-    compile 'com.google.android.gms:play-services-analytics:11.4.2'
-    compile 'com.google.android.gms:play-services-awareness:11.4.2'
-    compile 'com.google.android.gms:play-services-location:11.4.2'
+    compile 'com.google.android.gms:play-services-gcm:11.6.0'
+    compile 'com.google.android.gms:play-services-analytics:11.6.0'
+    compile 'com.google.android.gms:play-services-awareness:11.6.0'
+    compile 'com.google.android.gms:play-services-location:11.6.0'
+    compile 'com.google.android.gms:play-services-auth:11.6.0'
+    compile 'com.google.firebase:firebase-core:11.6.0'
     compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
-    compile 'com.google.firebase:firebase-core:11.4.2'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.microsoft.azure:notification-hubs-android-sdk:0.4@aar'
     compile 'com.microsoft.azure:azure-notifications-handler:1.0.1@aar'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.android.support:appcompat-v7:27.0.0'
-    compile 'com.android.support:design:27.0.0'
-    compile 'com.android.support:percent:27.0.0'
-    compile 'com.android.support:support-v4:27.0.0'
+    compile 'com.android.support:design:27.0.1'
+    compile 'com.android.support:percent:27.0.1'
+    compile 'com.android.support:support-v4:27.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:multidex:1.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.google.android.gms:play-services-auth:11.4.2'
     compile 'pub.devrel:easypermissions:0.3.0'
     compile('com.google.api-client:google-api-client-android:1.20.0') {
         exclude group: 'org.apache.httpcomponents'

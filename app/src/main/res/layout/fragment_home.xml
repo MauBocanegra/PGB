@@ -37,6 +37,9 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:layout_below="@id/iconButtonHomeVota"
                 android:layout_marginTop="5dp"
+                app:autoSizeMinTextSize="5sp"
+                android:gravity="center"
+                android:maxLines="1"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/textColorSecondary"
                 android:text="@string/button_home_vota"/>
@@ -79,6 +82,9 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:layout_below="@id/iconButtonHomeCuenta"
                 android:layout_marginTop="0dp"
+                app:autoSizeMinTextSize="5sp"
+                android:gravity="center"
+                android:maxLines="1"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/textColorSecondary"
                 android:text="@string/button_home_cuenta"/>
@@ -114,6 +120,9 @@
                 android:layout_below="@id/iconButtonHomeBenef"
                 android:layout_marginTop="5dp"
                 android:layout_centerHorizontal="true"
+                app:autoSizeMinTextSize="5sp"
+                android:maxLines="1"
+                android:gravity="center"
                 android:textColor="@color/textColorSecondary"
                 android:text="@string/button_home_benef"/>
 

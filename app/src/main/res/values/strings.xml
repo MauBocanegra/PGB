@@ -127,5 +127,6 @@
     <string name="prompt_genero">Géneros</string>
     <string name="title_activity_web_view">WebViewActivity</string>
     <string name="urlShortnerKey">AIzaSyBAAo16PbIPn5P_R8D7NYetQjfeEVwDuAk</string>
+    <string name="title_activity_null_act">null_act</string>
 
 </resources>

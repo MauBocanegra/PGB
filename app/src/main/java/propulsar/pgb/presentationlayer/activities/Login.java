@@ -3,7 +3,10 @@ package propulsar.pgb.presentationlayer.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -24,10 +27,12 @@ import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import propulsar.pgb.BuildConfig;
 import propulsar.pgb.domainlayer.objects.AnalyticsApplication;
 import propulsar.pgb.domainlayer.WS.WS;
 import propulsar.pgb.R;
@@ -77,6 +82,23 @@ public class Login extends AppCompatActivity implements
 
         inputCorreo = (TextInputLayout)findViewById(R.id.inputLayoutCorreo);
         inputContra = (TextInputLayout)findViewById(R.id.inputLayoutContra);
+
+        setInputTextLayoutColor(editTextCorreo, Color.WHITE);
+    }
+
+    public static void setInputTextLayoutColor(EditText editText, @ColorInt int color) {
+        TextInputLayout til = (TextInputLayout) editText.getParentForAccessibility();
+        try {
+            Field fDefaultTextColor = TextInputLayout.class.getDeclaredField("mDefaultTextColor");
+            fDefaultTextColor.setAccessible(true);
+            fDefaultTextColor.set(til, new ColorStateList(new int[][]{{0}}, new int[]{ color }));
+
+            Field fFocusedTextColor = TextInputLayout.class.getDeclaredField("mFocusedTextColor");
+            fFocusedTextColor.setAccessible(true);
+            fFocusedTextColor.set(til, new ColorStateList(new int[][]{{0}}, new int[]{ color }));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
