@@ -23,9 +23,11 @@ import java.util.Map;
 import propulsar.pgb.domainlayer.Adapters.NotifAdapter;
 import propulsar.pgb.domainlayer.objects.Notifs;
 import propulsar.pgb.domainlayer.WS.WS;
+import propulsar.pgb.presentationlayer.activities.BenefsActivity;
 import propulsar.pgb.presentationlayer.activities.ChatActivity;
 import propulsar.pgb.presentationlayer.activities.DetalleCase;
 import propulsar.pgb.R;
+import propulsar.pgb.presentationlayer.activities.EventActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +39,10 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public static final String keyChatOrBot = "keyChatOrBot";
+    public static final int keyGoToChat = 1;
+    public static final int keyGoToBot = 2;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -213,7 +219,7 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
     @Override
     public void onItemClick(int position) {
         String notif = notifs.get(position).getNotif();
-        String folio = notif.replaceAll("[^0-9]+","");
+        //String folio = notif.replaceAll("[^0-9]+","");
         //Log.d("ClickDebug","Folio="+notif.replaceAll("[^0-9]+","")+" length="+(notif.replaceAll("[^0-9]+","")).length());
 
         String[] arrSplit = notif.split(" ");
@@ -227,23 +233,31 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
         Log.d("folioDebug","folio="+folioNew);
 
 
-        if(folioNew.length()>3){
+        if(!folioNew.isEmpty()) {
             //FOLIO
-            Log.d("NotifDebug","Folio="+folio);
+            Log.d("NotifDebug", "Folio=" + folioNew);
             Intent intent = new Intent(getActivity(), DetalleCase.class);
-            intent.putExtra("caseFolio",folio);
+            intent.putExtra("caseFolio", folioNew);
             getActivity().startActivity(intent);
-        }else{
+        }else
+       // }else{
             if(notif.toLowerCase().contains("mensaje")){
                 //MENSAJE
                 Log.d("NotifDebug","Mensaje");
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra(keyChatOrBot,keyGoToChat);
+                startActivity(intent);
+            }else if(notif.toLowerCase().contains("beneficio")){
+                Intent intent = new Intent(getActivity(), BenefsActivity.class);
+                startActivity(intent);
+            }else if(notif.toLowerCase().contains("evento")){
+                Intent intent = new Intent(getActivity(), EventActivity.class);
                 startActivity(intent);
             }else{
                 //MASIVO
                 Log.d("NotifDebug","Masivo");
             }
-        }
+        //}
 
     }
 
