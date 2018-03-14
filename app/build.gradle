@@ -50,8 +50,8 @@ android {
             applicationId 'propulsar.qroo'
             targetSdkVersion 27
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 16
-            versionName '1.7.9'
+            versionCode 17
+            versionName '1.7.10'
             multiDexEnabled true
             buildConfigField ("boolean", "sanblasBoolean", "false")
         }

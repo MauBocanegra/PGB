@@ -214,7 +214,7 @@ public class Login extends AppCompatActivity implements
                             progressContra.setVisibility(View.VISIBLE);
                             Map<String, Object> params = new LinkedHashMap<>();
                             params.put("Email",editTextCorreo.getEditableText().toString());
-                            WS.getInstance(Login.this).recoverPassword(params,Login.this);
+                            WS.recoverPassword(params,Login.this);
                         }
                         return true;
                     }
@@ -250,7 +250,10 @@ public class Login extends AppCompatActivity implements
                 case WS.WS_recoverPassword:{
                     JSONObject data = json.getJSONObject("data");
                     if(data.getInt("Updated")==1){
-                        WS.getInstance(Login.this).showSucces("Se envió a tu correo la nueva contraseña",buttonLogin);
+                        WS.showSucces("Se envió a tu correo la nueva contraseña",buttonLogin);
+                        progressContra.setVisibility(View.GONE);
+                    }else{
+                        WS.showSucces("El correo ingresado no existe en la base de datos",buttonLogin);
                         progressContra.setVisibility(View.GONE);
                     }
                     break;
