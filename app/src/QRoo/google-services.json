@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "718228527870",
+    "firebase_url": "https://qroo-e4c1c.firebaseio.com",
+    "project_id": "qroo-e4c1c",
+    "storage_bucket": "qroo-e4c1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718228527870:android:8b76f77296a6e994",
+        "android_client_info": {
+          "package_name": "propulsar.qroo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718228527870-cf2al2233u7df2mv29ggd3pju2p3310v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "propulsar.qroo",
+            "certificate_hash": "b6540cc4a386a04aa3a9e7b9dcbfd50ddde8107e"
+          }
+        },
+        {
+          "client_id": "718228527870-396v6q4ehpnsdr0sbfpdq2j8ivtrcgnt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "propulsar.qroo",
+            "certificate_hash": "4177ed43113763058ff452496d3cb65afc0798fb"
+          }
+        },
+        {
+          "client_id": "718228527870-olou9408t9q09um7go1bocokkopmqn3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA16WPpPfL4tOoANtAcy87URVUn7BlmM6I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718228527870-olou9408t9q09um7go1bocokkopmqn3v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

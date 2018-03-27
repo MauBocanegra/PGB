@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "253448751495",
+    "firebase_url": "https://fir-sanblas.firebaseio.com",
+    "project_id": "firebase-sanblas",
+    "storage_bucket": "firebase-sanblas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253448751495:android:04db0e5338efb69f",
+        "android_client_info": {
+          "package_name": "propulsar.sanblas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253448751495-b5mq8l3pfrd91migas9cvk5mbi8pv61u.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "253448751495-bip764n29hlbfttstsjd51rs0eag1a80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp8T9wzDUp7feoe1Hetkddt-LnTDJ1h1U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-78255861-11"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
