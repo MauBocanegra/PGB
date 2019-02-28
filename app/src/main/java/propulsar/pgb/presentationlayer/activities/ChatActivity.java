@@ -2,6 +2,7 @@ package propulsar.pgb.presentationlayer.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +37,7 @@ import android.view.animation.Interpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -128,6 +131,7 @@ public class ChatActivity extends AppCompatActivity implements
     private TextView textStaff;
     private TextView textBot;
     int userID;
+    int officerID;
     private int skipIni=0; private int takeIni=10;
     private int skip=skipIni;
     private int take=takeIni;
@@ -157,6 +161,11 @@ public class ChatActivity extends AppCompatActivity implements
     private double lat; private double lon;
     private int initTime;
 
+    //private int botSteps=0;
+    private View textMainBar;
+    private View botButtons_1;
+    private static final int MENU_INICIAL=0;
+
     private View galleryContainer;
     private GalleryAdapter mGalleryAdapter;
     private GridView gallery;
@@ -168,6 +177,8 @@ public class ChatActivity extends AppCompatActivity implements
     private int pastVisiblesItems;
     private boolean topRequested=false;
     //end region
+
+    private static final String TAG = "ChatActivity";
 
     //region LIFE CYCLE
     // ----------------------------------------------- //
@@ -186,7 +197,7 @@ public class ChatActivity extends AppCompatActivity implements
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getLocation();
                 } else {
-                    (WS.getInstance(ChatActivity.this)).showSucces("Para enviar tu ubicación debes permitirnos obtenerla",buttonLocation);
+                    WS.showSucces("Para enviar tu ubicación debes permitirnos obtenerla",buttonLocation);
                 }
                 return;
             }
@@ -196,7 +207,7 @@ public class ChatActivity extends AppCompatActivity implements
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showGallery();
                 }else{
-                    (WS.getInstance(ChatActivity.this)).showSucces("Para enviar una imágen debes permitir el acceso a tus archivos",buttonImg);
+                    WS.showSucces("Para enviar una imágen debes permitir el acceso a tus archivos",buttonImg);
                 }
                 return;
             }
@@ -206,7 +217,7 @@ public class ChatActivity extends AppCompatActivity implements
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showGallery();
                 }else{
-                    (WS.getInstance(ChatActivity.this)).showSucces("Para enviar una imágen debes permitir el acceso a tus archivos",buttonImg);
+                    WS.showSucces("Para enviar una imágen debes permitir el acceso a tus archivos",buttonImg);
                 }
                 return;
             }
@@ -216,7 +227,7 @@ public class ChatActivity extends AppCompatActivity implements
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showCamera();
                 }else{
-                    (WS.getInstance(ChatActivity.this)).showSucces("Para capturar una foto debes permitir el acceso a la misma",buttonImg);
+                    WS.showSucces("Para capturar una foto debes permitir el acceso a la misma",buttonImg);
                 }
                 return;
             }
@@ -279,6 +290,10 @@ public class ChatActivity extends AppCompatActivity implements
         buttonCam = (FloatingActionButton) findViewById(R.id.fab_camera);
         buttonGallery = (FloatingActionButton)findViewById(R.id.fab_gallery);
         progressGalleryLoaded = findViewById(R.id.progressGalleryLoading);
+
+        //botButtons_1 = findViewById(R.id.botButtons1);
+        textMainBar = findViewById(R.id.textMainBar);
+        //setBot1stClickListeners();
 
         //Establecemos los clicks de lo clickeable
         fab.setOnClickListener(new View.OnClickListener() {
@@ -352,7 +367,7 @@ public class ChatActivity extends AppCompatActivity implements
         }
 
         //findViewById(R.id.buttonChat_bot).callOnClick();
-        //findViewById(R.id.buttonChat_staff).callOnClick();
+        findViewById(R.id.buttonChat_staff).callOnClick();
     }
 
     @Override
@@ -400,6 +415,14 @@ public class ChatActivity extends AppCompatActivity implements
     // ----------------------------------------------- //
 
     private void checkInitBot(){
+        //-------------------------
+        //-------------------------
+        //-------------------------
+        // KEY PROBOT PROCIVICA
+        //-------------------------
+        //-------------------------
+        //-------------------------
+
         String currentToken = BotWS.getCurrentToken();
         if(currentToken.isEmpty()){
             swipeRefreshLayout.setRefreshing(true);
@@ -407,6 +430,26 @@ public class ChatActivity extends AppCompatActivity implements
             WS.requestToken(params, ChatActivity.this);
             //BotWS.initBot(params,ChatActivity.this);
         }
+
+        /*
+        switch (botSteps){
+            case MENU_INICIAL:{
+
+                // Hide keyboard
+                if (textMainBar != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(textMainBar.getWindowToken(), 0);
+
+                }
+
+                //escondemos la barra de texto
+                textMainBar.setVisibility(View.GONE);
+                //mostramos el step1 del bot
+                botButtons_1.setVisibility(View.VISIBLE);
+
+            }
+        }
+        */
     }
 
     private View.OnClickListener chatSwitcherListener(){
@@ -414,6 +457,7 @@ public class ChatActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 switch(view.getId()){
+                    //Hacemos la comparacion de los buttonchats
                     case R.id.buttonChat_bot:{
                         findViewById(R.id.msgNoHay).setVisibility(View.GONE);
 
@@ -431,6 +475,14 @@ public class ChatActivity extends AppCompatActivity implements
                         buttonLocation.setVisibility(View.VISIBLE);
                         buttonImg.setVisibility(View.VISIBLE);
                         isBotOn=false;
+
+                        /*
+                        //escondemos la barra de texto
+                        textMainBar.setVisibility(View.VISIBLE);
+                        //mostramos el step1 del bot
+                        botButtons_1.setVisibility(View.GONE);
+                        */
+
                         break;
                     }
                 }
@@ -474,12 +526,8 @@ public class ChatActivity extends AppCompatActivity implements
                     if(messages.size()==0){
                         Msg newMsg = new OtherMsg();
                         newMsg.setId(-1);
-                        newMsg.setSenderId(3);
-                        newMsg.setMsg("¡Hola! Mi nombre es Probot" +
-                                "\nSoy el Chatbot inteligente de "+getResources().getString(R.string.app_name)+" y te puedo" +
-                                " ayudar a generar de manera INMEDIATA Denuncias, Sugerencias, Quejas y Consultar " +
-                                "el estatus de tus casos." +
-                                "\n¿Qué deseas hacer?");
+                        newMsg.setSenderId(2);
+                        newMsg.setMsg("¡Hola! Mi nombre es Cloud.io");
                         newMsg.setTimeStamp(" T ");
                         newMsg.setType(1);
                         newMsg.setUrl("");
@@ -597,10 +645,12 @@ public class ChatActivity extends AppCompatActivity implements
             out.flush();
             out.close();
             locationDir = root+"/saved_images/"+fname;
+            return locationDir;
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("ImageError","ERROR SAVING COMPRESSED IMAGE");
+            return locationDir;
         }
-        return locationDir;
     }
 
     private void rewriteCompressedImg(String fileLocation){
@@ -666,7 +716,7 @@ public class ChatActivity extends AppCompatActivity implements
         Log.d("asdfg","userID="+userID+"fileName="+file.getName());
         Call<ResponseBody> call = client.uploadPhoto(
                 createPartFromString(""+userID),
-                createPartFromString("3"),
+                createPartFromString(""+officerID),
                 createPartFromString("4"),
                 prepareFilePart("fileContents",fileLocation)
         );
@@ -869,6 +919,87 @@ public class ChatActivity extends AppCompatActivity implements
         }
     }
 
+    private String parcheCadenasBotCloudio(final String mensaje){
+
+        Log.d("BotStringDebug","mensaje="+mensaje);
+
+        switch(mensaje){
+            case "¡Hola! Yo soy Probot y seré tu asistente, escribe Ok para continuar.":{
+                return  "¡Hola! Mi nombre es Cloud.io";
+            }
+
+            case "Puedo ayudarte con las siguientes opciones, por favor selecciona una.":{
+                return "¿En qué te puedo ayudar hoy?";
+            }
+
+            case "Gestion":{
+                return "Solicitud";
+            }
+
+            case "Agua Y Drenaje":{
+                return "Control Escolar";
+            }
+
+            case "Grietas Y Baches":{
+                return "Transporte";
+            }
+
+            case "Alumbrado":{
+                return "Limpieza";
+            }
+
+            case "Ramas Caidas":{
+                return "Seguridad";
+            }
+
+            case "Basura":{
+                return "Padres de familia";
+            }
+
+            case "Otro":{
+                return "Actividades extracurriculares";
+            }
+
+            //-------
+
+            case "Solicitud":{
+                return "Gestion";
+            }
+
+            case "Control Escolar":{
+                return "Agua Y Drenaje";
+            }
+
+            case "Transporte":{
+                return "Grietas y Baches";
+            }
+
+            case "Limpieza":{
+                return "Alumbrado";
+            }
+
+            case "Seguridad":{
+                return "Ramas Caidas";
+            }
+
+            case "Padres de familia":{
+                return "Basura";
+            }
+
+            case "Actividades extracurriculares":{
+                return "Otro";
+            }
+
+            case "Por favor describenos el problema.":{
+                return "Describe tu solicitud lo más claro posible.";
+            }
+
+            default:{
+                return mensaje;
+            }
+        }
+    }
+
     private void getMessages(boolean isTopList){
 
         swipeRefreshLayout.setRefreshing(true);
@@ -930,7 +1061,7 @@ public class ChatActivity extends AppCompatActivity implements
                 userID = sharedPreferences.getInt("userID",0);
                 Map<String, Object> params = new LinkedHashMap<>();
                 params.put("UserId",userID);
-                params.put("DestinationId",3);
+                params.put("DestinationId",officerID);
                 params.put("Text",""+String.format("%.6f", lat)+","+ String.format("%.6f", lon));
                 params.put("MessageTypeId",3);
                 WS.getInstance(ChatActivity.this).sendMessage(params,ChatActivity.this);
@@ -971,7 +1102,7 @@ public class ChatActivity extends AppCompatActivity implements
                 Map<String, Object> params = new LinkedHashMap<String, Object>();
                 JSONObject jsonMsg = new JSONObject();
                 jsonMsg.put("type", "message");
-                jsonMsg.put("text",mensaje);
+                jsonMsg.put("text",parcheCadenasBotCloudio(mensaje));
                     JSONObject jsonID = new JSONObject();
                     jsonID.put("id",userID);
                 jsonMsg.put("from",jsonID);
@@ -987,7 +1118,7 @@ public class ChatActivity extends AppCompatActivity implements
         userID = sharedPreferences.getInt("userID",0);
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("UserId",userID);
-        params.put("DestinationId",3);
+        params.put("DestinationId",officerID);
         params.put("MessageTypeId",1);
         params.put("Text",mensaje);
         WS.sendMessage(params,ChatActivity.this);
@@ -1030,46 +1161,87 @@ public class ChatActivity extends AppCompatActivity implements
         }
     }
 
-    // ---------------------------------------------------- //
-    // -------------- SWITCH IMPLEMENTATION --------------- //
-    // ---------------------------------------------------- //
-
     /*
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        //staffChat
-        if(isChecked){
-            //messages = respChat;
-            messages.clear();
-            for(Msg msg : respChat){
-                messages.add(msg);
-            }
-            mAdapter.notifyDataSetChanged();
-            Log.d("SwitchLOG","checked!");
-        }else{
-            //messages = respBot;
 
-            messages.clear();
-            for(Msg msg : respBot){
-                messages.add(msg);
-            }
-
-            if(messages.size()==0){
-                Msg newMsg = new OtherMsg();
-                newMsg.setId(-1);
-                newMsg.setSenderId(3);
-                newMsg.setMsg("¡Hola!\nSoy el ChatBot inteligente de YoNayarit y te puedo ayudar a generar Denuncias, Sugerencias, Quejas y Consultar el estatus de tus casos.\n¿Qué deseas hacer?");
-                newMsg.setTimeStamp(" T ");
-                newMsg.setUrl("");
-                newMsg.setBot(true);
-                messages.add(newMsg);
-            }
-
-            mAdapter.notifyDataSetChanged();
-            Log.d("SwitchLOG","unChecked");
-        }
+    private void setBot1stClickListeners(){
+        //findViewById(R.id.bot_step1_consulta).setOnClickListener(getBot1stMenuClickListeners());
+        findViewById(R.id.bot_step1_solicitud).setOnClickListener(getBot1stMenuClickListeners());
+        findViewById(R.id.bot_step1_queja).setOnClickListener(getBot1stMenuClickListeners());
+        findViewById(R.id.bot_step1_denuncia).setOnClickListener(getBot1stMenuClickListeners());
+        findViewById(R.id.bot_step1_sugerencia).setOnClickListener(getBot1stMenuClickListeners());
+        findViewById(R.id.bot_step1_otro).setOnClickListener(getBot1stMenuClickListeners());
     }
-*/
+
+    private View.OnClickListener getBot1stMenuClickListeners(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String mensaje = "";
+                switch(v.getId()){
+                    case R.id.bot_step1_solicitud:{
+                        Log.d(TAG, "bot_solicitud");
+                        mensaje="Redactar una solicitud";
+                        break;
+                    }
+
+                    case R.id.bot_step1_queja:{
+                        Log.d(TAG, "bot_queja");
+                        mensaje="Presentar una queja";
+                        break;
+                    }
+
+                    case R.id.bot_step1_denuncia:{
+                        Log.d(TAG, "bot_denuncia");
+                        mensaje="Realizar una denuncia";
+                        break;
+                    }
+
+                    case R.id.bot_step1_sugerencia:{
+                        Log.d(TAG, "bot_sugerencia");
+                        mensaje="Redactar una sugerencia";
+                        break;
+                    }
+
+
+                    case R.id.bot_step1_otro:{
+                        Log.d(TAG, "bot_otro");
+                        WS.showMessage("Intenta ser lo más claro posible, el chatbot aún está aprendiendo a entenderte",ChatActivity.this);
+                        //escondemos la barra de texto
+                        textMainBar.setVisibility(View.VISIBLE);
+                        //mostramos el step1 del bot
+                        botButtons_1.setVisibility(View.GONE);
+                        
+                        break;
+                    }
+                }
+
+                if(v.getId()!=R.id.bot_step1_otro)
+                try {
+                    Map<String, Object> params = new LinkedHashMap<String, Object>();
+                    JSONObject jsonMsg = new JSONObject();
+                    jsonMsg.put("type", "message");
+                    jsonMsg.put("text",mensaje);
+                    JSONObject jsonID = new JSONObject();
+                    jsonID.put("id",userID);
+                    jsonMsg.put("from",jsonID);
+
+                    swipeRefreshLayout.setRefreshing(true);
+                    BotWS.sendMsg(params, ChatActivity.this, jsonMsg);
+
+                    //escondemos la barra de texto
+                    textMainBar.setVisibility(View.VISIBLE);
+                    //mostramos el step1 del bot
+                    botButtons_1.setVisibility(View.GONE);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+    */
+
+
 
     // ---------------------------------------------------------- //
     // -------------- WEB SERVICES IMPLEMENTATION --------------- //
@@ -1093,7 +1265,6 @@ public class ChatActivity extends AppCompatActivity implements
                     JSONArray dataArray = data.getJSONArray("Data");
                     JSONObject dataData = dataArray.getJSONObject(0);
                     String firstToken = dataData.getString("Value");
-                    //Log.d("BOT GETTOKEN","initialToken = "+dataData.getString("Value"));
 
                     BotWS.setBotToken(firstToken);
                     BotWS.initBot(params, ChatActivity.this);
@@ -1159,6 +1330,7 @@ public class ChatActivity extends AppCompatActivity implements
                     JSONObject data = json.getJSONObject("data");
                     officerName=data.getString("Name");
                     officerURLImage=data.getString("ImageUrl");
+                    officerID = data.getInt("UserId");
 
                     textStaff.setText(officerName);
                     Picasso.with(ChatActivity.this).load(officerURLImage).into(switchButtonStaffImg);
@@ -1213,6 +1385,11 @@ public class ChatActivity extends AppCompatActivity implements
                     JSONArray arrayMsgs = data.getJSONArray("activities");
                     Log.d("activitiesSHOW",arrayMsgs.toString());
 
+
+                    /*
+                    2018-10-31 18:33:50.632 22564-22564/propulsar.procivica D/BOT MSG ANSW: {"status":0,"ws":104,"data":{"activities":[{"type":"message","id":"57qtXl8AvfUKf4gqF9sIbd|0000000","timestamp":"2018-11-01T00:33:40.5996348Z","channelId":"directline","from":{"id":"ProbotTesting","name":"ProbotTesting"},"conversation":{"id":"57qtXl8AvfUKf4gqF9sIbd"},"text":"¡Hola! Yo soy Probot y seré tu asistente, escribe Ok para continuar.","attachments":[],"entities":[],"replyToId":"GMT3Gfgczsa"},{"type":"message","id":"57qtXl8AvfUKf4gqF9sIbd|0000001","timestamp":"2018-11-01T00:33:49.3125317Z","serviceUrl":"https:\/\/directline.botframework.com\/","channelId":"directline","from":{"id":"49"},"conversation":{"id":"57qtXl8AvfUKf4gqF9sIbd"},"text":"hola"},{"type":"message","id":"57qtXl8AvfUKf4gqF9sIbd|0000002","timestamp":"2018-11-01T00:33:50.663576Z","localTimestamp":"2018-11-01T00:33:50.3686082+00:00","channelId":"directline","from":{"id":"ProbotTesting","name":"ProbotTesting"},"conversation":{"id":"57qtXl8AvfUKf4gqF9sIbd"},"attachmentLayout":"list","text":"","inputHint":"expectingInput","attachments":[{"contentType":"application\/vnd.microsoft.card.hero","content":{"text":"Puedo ayudarte con las siguientes opciones, por favor selecciona una.","buttons":[{"type":"imBack","title":"Gestion","value":"Gestion"},{"type":"imBack","title":"Denuncia","value":"Denuncia"},{"type":"imBack","title":"Comentario","value":"Comentario"}]}}],"entities":[],"replyToId":"57qtXl8AvfUKf4gqF9sIbd|0000001"}],"watermark":"2"}}
+                    * */
+
                     /*
                     Msg newMsg = new OtherMsg();
                         newMsg.setId(-1);
@@ -1227,6 +1404,81 @@ public class ChatActivity extends AppCompatActivity implements
                         newMsg.setBot(true);
                         messages.add(newMsg);
                         */
+
+                    for(int i=0; i<arrayMsgs.length(); i++){
+
+
+                        try{
+                            JSONObject jsonMsg = arrayMsgs.getJSONObject(i);
+                            if(jsonMsg.getJSONObject("from").getString("id").equals("ProbotTesting")){
+                                Msg newMsg = new OtherMsg();
+                                newMsg.setSenderId(2);
+
+                                JSONArray jsonArrAttachments = jsonMsg.getJSONArray("attachments");
+                                if(jsonArrAttachments.length()>0){
+                                    JSONObject jsonAttContents = jsonArrAttachments.getJSONObject(0).getJSONObject("content");
+
+                                    newMsg.setMsg(parcheCadenasBotCloudio(jsonAttContents.getString("text")));
+                                    //newMsg.setMsg(jsonAttContents.getString("text"));
+
+                                    JSONArray jsonArrButtons = jsonAttContents.getJSONArray("buttons");
+                                    ArrayList<String> buttons = new ArrayList<>();
+                                    for(int j=0; j<jsonArrButtons.length(); j++){
+                                        buttons.add(parcheCadenasBotCloudio(jsonArrButtons.getJSONObject(j).getString("title")));
+                                    }
+                                    newMsg.setButtons(buttons);
+                                    newMsg.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Log.d("BUTTON TEXT","buttonText="+((Button)v).getText());
+
+                                            try {
+
+                                                scaleIni = 1;
+                                                scaleFin = 0;
+                                                fabAnimate(false);
+
+                                                swipeRefreshLayout.setRefreshing(true);
+
+                                                Map<String, Object> params = new LinkedHashMap<String, Object>();
+                                                JSONObject jsonMsg = new JSONObject();
+                                                jsonMsg.put("type", "message");
+                                                jsonMsg.put("text",parcheCadenasBotCloudio( ((Button)v).getText().toString() ));
+                                                JSONObject jsonID = new JSONObject();
+                                                jsonID.put("id",userID);
+                                                jsonMsg.put("from",jsonID);
+
+                                                BotWS.sendMsg(params, ChatActivity.this, jsonMsg);
+                                            }catch(Exception e){
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    newMsg.setMsg(jsonMsg.getString("text"));
+                                }
+                                newMsg.setType(1);
+                                newMsg.setBot(true);
+                                newMsg.setTimeStamp(" T ");
+                                respBot.add(0,newMsg);
+                            }else{
+                                Msg newMsg = new OwnMsg();
+                                newMsg.setSenderId(userID);
+                                newMsg.setMsg(jsonMsg.getString("text"));
+                                newMsg.setType(1);
+                                newMsg.setBot(true);
+                                newMsg.setTimeStamp(" T ");
+                                respBot.add(0,newMsg);
+                            }
+
+                            Log.d("BOT ID's","MSG ID = "+jsonMsg.getJSONObject("from").getString("id"));
+
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    /*
                     for(int i=0; i<arrayMsgs.length(); i++){
 
                         JSONObject jsonMsg = arrayMsgs.getJSONObject(i);
@@ -1237,7 +1489,7 @@ public class ChatActivity extends AppCompatActivity implements
                             idSender = Integer.parseInt(jsonMsg.getJSONObject("from").getString("id"));
 
                             Msg newMsg = new OwnMsg();
-                            newMsg.setSenderId(idSender==userID ? userID : 3);
+                            newMsg.setSenderId(idSender==userID ? userID : 2);
                             newMsg.setMsg(jsonMsg.getString("text"));
                             newMsg.setTimeStamp(" T ");
                             newMsg.setUrl("");
@@ -1247,7 +1499,7 @@ public class ChatActivity extends AppCompatActivity implements
                         } catch(NumberFormatException nfe) {
                             //System.out.println("Could not parse " + nfe);
                             Msg newMsg = new OtherMsg();
-                            newMsg.setSenderId(3);
+                            newMsg.setSenderId(2);
                             newMsg.setType(1);
                             newMsg.setMsg(jsonMsg.getString("text"));
                             newMsg.setTimeStamp(" T ");
@@ -1256,6 +1508,8 @@ public class ChatActivity extends AppCompatActivity implements
                             respBot.add(0,newMsg);
                         }
                     }
+
+                    */
                     //Collections.reverse(respBot);
 
                     messages.clear();
@@ -1363,12 +1617,7 @@ public class ChatActivity extends AppCompatActivity implements
     // -------------- GALLERY LOADED IMPLEMENTATION --------------- //
     // ------------------------------------------------------------ //
 
-    /*
-    un num inf comienzo
-    vividor prof bosque
-    ojo falta tatmea
-    omellete asemeja caspa
-    */
+
 
     @Override
     public void onGalleryLoaded() {

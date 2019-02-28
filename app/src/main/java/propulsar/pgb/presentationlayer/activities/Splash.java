@@ -19,6 +19,7 @@ import com.google.android.gms.analytics.Tracker;
 
 import domainlayer.Services.MyHandler;
 import domainlayer.Services.WSConstant;
+import propulsar.pgb.domainlayer.WS.WS;
 import propulsar.pgb.domainlayer.objects.AnalyticsApplication;
 import propulsar.pgb.R;
 
@@ -36,6 +37,8 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        WS.getInstance(getApplicationContext());
+
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Splash.this.NOTIFICATION_SERVICE);
         notificationManager.cancel(MyHandler.NOTIFICATION_ID);
 
@@ -47,7 +50,7 @@ public class Splash extends AppCompatActivity {
 
 
         gifDrawable = (ImageView) findViewById(R.id.videoView);
-        Glide.with(this).load(R.drawable.splash).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(new GlideDrawableImageViewTarget(gifDrawable));
+        Glide.with(this).load(R.drawable.splash_proc).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(new GlideDrawableImageViewTarget(gifDrawable));
 
 
 
@@ -67,7 +70,7 @@ public class Splash extends AppCompatActivity {
                     finish();
                 }
             }
-        }, WSConstant.flavorID==2 ? 3400 : 2000);
+        }, /*WSConstant.flavorID==2 ? 3400 : 2000*/2100);
 
     }
 

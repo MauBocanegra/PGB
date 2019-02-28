@@ -30,7 +30,8 @@
             android:value="@string/geo_APIKEY" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
 
         <provider
             android:name="com.facebook.FacebookContentProvider"
@@ -44,6 +45,10 @@
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.
         -->
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -110,6 +115,14 @@
             android:parentActivityName=".presentationlayer.activities.TabActivity"
             android:theme="@style/AppThemeNoBar" />
         <activity
+            android:name=".presentationlayer.activities.ChatFirebase"
+            android:parentActivityName=".presentationlayer.activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
+            android:name=".presentationlayer.activities.ChatListFirebase"
+            android:parentActivityName=".presentationlayer.activities.TabActivity"
+            android:theme="@style/AppThemeNoBar" />
+        <activity
             android:name=".presentationlayer.activities.DetalleProp"
             android:theme="@style/AppThemeNoBar" />
         <activity
@@ -154,6 +167,9 @@
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
         <!--
@@ -167,7 +183,7 @@
 
         <service
             android:name=".domainlayer.Services.RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <receiver
             android:name="com.microsoft.windowsazure.notifications.NotificationsBroadcastReceiver"
@@ -175,7 +191,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="propulsar.jala" />
+                <category android:name="propulsar.bahia" />
             </intent-filter>
         </receiver>
 
@@ -188,10 +204,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name="propulsar.sanblas.domainlayer.Services.null_act"
-            android:label="@string/title_activity_null_act"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".presentationlayer.activities.CodigoActivity"
+            android:theme="@style/AppThemeNoBar"/>
+
+        <activity android:name=".presentationlayer.activities.ElegirVersionActivity"
+            android:theme="@style/AppThemeNoBar"/>
+
     </application>
 
 </manifest>

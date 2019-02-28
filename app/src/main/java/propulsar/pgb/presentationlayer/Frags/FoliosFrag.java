@@ -134,7 +134,7 @@ public class FoliosFrag extends Fragment implements WS.OnWSRequested, SwipeRefre
         params.put("UserId",userID);
         params.put("Skip",skip);
         params.put("Take",take);
-        WS.getInstance(getActivity()).getCasesList(params,this);
+        WS.getCasesList(params,this);
     }
 
     private void addToList(ArrayList<Case> newCases){
@@ -204,8 +204,10 @@ public class FoliosFrag extends Fragment implements WS.OnWSRequested, SwipeRefre
                     addToList(newCases);
 
                     if(newCases.size()==0){
+                        Log.d("DebugColors","NoHay! - Visible");
                         view.findViewById(R.id.casesNoHay).setVisibility(View.VISIBLE);
                     }else{
+                        Log.d("DebugColors","Hay! - Gone");
                         view.findViewById(R.id.casesNoHay).setVisibility(View.GONE);
                     }
                 }

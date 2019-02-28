@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "478956270067",
+    "firebase_url": "https://montessori-233017.firebaseio.com",
+    "project_id": "montessori-233017",
+    "storage_bucket": "montessori-233017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478956270067:android:a1303b13b441f5a4",
+        "android_client_info": {
+          "package_name": "propulsar.govit.montessori"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478956270067-i149bgd2195arktat8urg9u51ke5p9hb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYdFhFsoZrvoxL3w2qy_cAP1MeWqmI2AQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

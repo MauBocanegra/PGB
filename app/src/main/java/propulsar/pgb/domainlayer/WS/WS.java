@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,19 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -39,6 +53,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import propulsar.pgb.R;
+import propulsar.pgb.domainlayer.firebase_objects.Mensaje_FirebaseObj;
+import propulsar.pgb.domainlayer.firebase_objects.Usuario_FirebaseObj;
+import propulsar.pgb.presentationlayer.activities.Login;
 
 /**
  * Created by maubocanegra on 03/02/17.
@@ -54,6 +71,18 @@ public class WS {
     public static OnWSRequested facebookListener;
     private static HttpURLConnection con = null;
 
+    private static Activity loginActivity;
+
+    private static int userID=-1;
+
+    private static FirebaseAuth mAuth;
+    private static FirebaseUser firebaseUser;
+    private static DatabaseReference mDatabase;
+    private static DatabaseReference.CompletionListener mCompletionListener;
+
+    private static final String USUARIOS = "usuarios";
+    private static final String MENSAJES = "mensajes";
+
     private static AsyncTask<Void,Void,JSONObject> async;
 
     public synchronized static WS getInstance(Context c){
@@ -62,11 +91,16 @@ public class WS {
             WS_URL = c.getString(R.string.ServicesLink);
             instance = new WS();
             context=c;
+            mAuth = FirebaseAuth.getInstance();
             Log.d("fbLog","initFb");
             callbackManager = CallbackManager.Factory.create();
             LoginManager.getInstance().registerCallback(callbackManager,
                 getFbCallback()
             );
+
+            FirebaseDatabase fbdb = FirebaseDatabase.getInstance();
+            fbdb.setPersistenceEnabled(false);
+            mDatabase = fbdb.getReference();
         }
         return instance;
     }
@@ -76,6 +110,8 @@ public class WS {
     }
 
     public static void loginFb(Activity activity, OnWSRequested listener){
+
+        loginActivity = activity;
         Log.d("WSDeb","pressedLogin");
         facebookListener=listener;
         AccessToken token = AccessToken.getCurrentAccessToken();
@@ -115,6 +151,53 @@ public class WS {
         }
     }
 
+    public static void loginOrRegisterFirebaseMail(final String email, final String password, final Activity activity){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof FirebaseAuthException) {
+                            String errCode = ((FirebaseAuthException) e).getErrorCode();
+                            if(errCode.compareTo("ERROR_USER_NOT_FOUND")==0){
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull com.google.android.gms.tasks.Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d("FirebaseDebug", "createUserWithEmail:success");
+                                                    firebaseUser = mAuth.getCurrentUser();
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w("FirebaseDebug", "createUserWithEmail:failure", task.getException());
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                })
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("FirebaseDebug", "signInWithEmail:success");
+                            firebaseUser = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            try {
+                                Log.w("FirebaseDebug", "signInWithEmail:failure", task.getException());
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
     // ------------------------------------------- //
     // -------------- WEB SERVICES --------------- //
     // ------------------------------------------- //
@@ -127,6 +210,7 @@ public class WS {
 
     public static void userSignIn(Map<String,Object> params, OnWSRequested listener){
         Log.d("userSignIn"," ----- userSignInRequested ----- ");
+        //String urlString = "http://svc.procivica.com/api/"+WS_userLogin;
         String urlString = WS_URL+WS_userSignInURL;
         performRequest(urlString, WS_userSignIn, params, POSTID, listener);
     }
@@ -283,6 +367,7 @@ public class WS {
 
     public static void requestToken(Map<String,Object> params, OnWSRequested listener){
         Log.d("requestToken", " ----- requestTokenRequested ----- ");
+        //String urlString = "http://svc.procivica.com/api/"+WS_getBotTokenURL;
         String urlString = WS.WS_URL+WS_getBotTokenURL;
         performRequest(urlString,  WS_getBotToken, params, GETID, listener);
     }
@@ -337,7 +422,7 @@ public class WS {
                         postData.append('=');
                         postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
                     }
-                Log.d("WSDeb","postData.toString()="+urlString+postData.toString());
+                Log.d("WSDeb","postData.toString()="+urlString+" postData = "+postData.toString());
                 if(postGet==GETID){
                     url = new URL(urlString.concat(postData.toString()));
                 }
@@ -505,6 +590,28 @@ public class WS {
             public void onSuccess(LoginResult loginResult) {
                 Log.d("CallbackLog","onSuccess");
                 final AccessToken token = AccessToken.getCurrentAccessToken();
+
+                try {
+                    AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+                    mAuth.signInWithCredential(credential)
+                            .addOnCompleteListener(loginActivity, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull com.google.android.gms.tasks.Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d("FirebaseDebug", "signInWithCredential:success");
+                                        firebaseUser = mAuth.getCurrentUser();
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("FirebaseDebug", "signInWithCredential:failure", task.getException());
+
+                                    }
+
+                                    // ...
+                                }
+                            });
+                }catch(Exception e){e.printStackTrace();}
+
                 GraphRequest graphRequest = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject fbJsonObj, GraphResponse response) {
@@ -600,9 +707,58 @@ public class WS {
         */
     }
 
+    public static int getUserID() {
+        return userID;
+    }
+
+    public static void setUserID(int userID) {
+        WS.userID = userID;
+    }
+
+    // ------------------------------------------- //
+    // -------------- FIREBASE METHODS --------------- //
+    // ------------------------------------------- //
+
+    public static void mandarMensajeFirebase(final int userIDToDownloadChats, Usuario_FirebaseObj usuario, final Mensaje_FirebaseObj mensaje, final FirebaseCompletionListener firebaseCompletionListener_){
+        if(mDatabase==null){
+            Log.e("ERROR","mDatabase IS NULL"); return;
+        }
+
+        mDatabase.child(USUARIOS).child(""+userIDToDownloadChats).child("lastTimestamp").setValue(usuario.getLastTimestamp());
+        mDatabase.child(USUARIOS).child(""+userIDToDownloadChats).child("ultimoMensaje").setValue(mensaje);
+        mDatabase.child(USUARIOS).child(""+userIDToDownloadChats).child("user").setValue(userIDToDownloadChats);
+        mDatabase.child(USUARIOS).child(""+userIDToDownloadChats).child("nombre").setValue(usuario.getNombre());
+        mDatabase.child(MENSAJES).child(""+ userIDToDownloadChats).push().setValue(mensaje, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                firebaseCompletionListener_.firebaseCompleted(true);
+            }
+        });
+    }
+
+    public static void setReaderListener(ChildEventListener childEventListener, int userIDToDownloadChats){
+        mDatabase.child(MENSAJES).child(""+userIDToDownloadChats).addChildEventListener(childEventListener);
+    }
+
+    public static void removeReaderListener(ChildEventListener childEventListener){
+        mDatabase.child(MENSAJES).removeEventListener(childEventListener);
+    }
+
+    public static void setReaderChatsListener(ChildEventListener childEventListener){
+        mDatabase.child(USUARIOS).orderByChild("lastTimestamp").addChildEventListener(childEventListener);
+    }
+
+    public static void removeReaderChatsListener(ChildEventListener childEventListener){
+        mDatabase.child(USUARIOS).removeEventListener(childEventListener);
+    }
+
     // ------------------------------------------- //
     // -------------- OWN LISTENER --------------- //
     // ------------------------------------------- //
+
+    public interface FirebaseCompletionListener{
+        public void firebaseCompleted(boolean hasError);
+    }
 
     public interface OnWSRequested{
         public void wsAnswered(JSONObject json);
@@ -649,6 +805,8 @@ public class WS {
     private static final int POSTID = 11;
     private static final int MULTIPARTID = 12;
 
+    public static final String WS_userLogin = "Login";
+
     public static final String WS_userSignInURL = "UserSession/UserSignin";
     public static final String WS_getMenuURL = "User/GetHome";
     public static final String WS_getEventDetailsURL = "Event/GetEventDetails";
@@ -672,7 +830,7 @@ public class WS {
     public static final String WS_saveProfileURL = "User/SaveUserProfile";
     public static final String WS_registerFacebookURL = "User/UserRegistrationWithFaceboook";
     public static final String WS_getAboutURL = "Site/GetSiteConfiguration?Name=about";
-    public static final String WS_updatePasswordURL = "User/ChangePassword";
+    public static final String WS_updatePasswordURL = "User/ChangeUserPassword";
     public static final String WS_recoverPasswordURL = "User/RecoveryPassword";
     public static final String WS_getOfficerInfoURL = "User/GetBasicProfileOfficial";
     public static final String WS_getBotTokenURL = "Site/GetSiteConfiguration?Name=directLine";

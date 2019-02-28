@@ -11,6 +11,10 @@
     <string name="hintContra">Contraseña</string>
     <string name="iniOKFacebook">Ingreso con Facebook exitoso</string>
     <string name="iniOKLogin">Inicio de sesión exitoso</string>
+    <string name="login_registrate">Registrate</string>
+    <string name="login_codigo">Código</string>
+    <string name="login_yatengocuenta">Ya tengo una cuenta</string>
+    <string name="login_ingresacodigo">Ingresa el código de referencia proporcionado</string>
     <string name="iniOKRegistro">¡Cuenta creada exitosamente! Inicio de sesión automático</string>
     <string name="menu_social_fb">Facebook</string>
     <string name="menu_social_tw">Twitter</string>
@@ -18,7 +22,7 @@
 
     <string name="button_home_vota">Vota</string>
     <string name="button_home_cuenta">Cuéntanos</string>
-    <string name="button_home_benef">Oportunidades</string>
+    <string name="button_home_benef">Convocatorias</string>
     <string name="placeholder_fecha">00/00/0000</string>
     <!--
     <string name="placeholder_titulo_benefit">¡Domingo sin carro!</string>
@@ -61,6 +65,7 @@
 
     <string name="ph_correo">Correo</string>
     <string name="ph_contra">Contraseña</string>
+    <string name="ph_contra_nueva">Contraseña Nueva</string>
 
     <string name="event_compartir">COMPARTIR</string>
     <!--
@@ -75,6 +80,8 @@
     <string name="chat_user">Staff</string>
     <string name="enviar_ubi">Enviar esta ubicación</string>
     <string name="chat_obteniendogaleria">Cargando tus archivos...</string>
+    <string name="chat_cargando">Cargando</string>
+    <string name="chat_enviando_mensaje">Enviando mensaje</string>
 
     <!--
     <string name="benefs_contestarEncuesta">CONTESTAR ENCUESTA</string>
@@ -128,5 +135,7 @@
     <string name="title_activity_web_view">WebViewActivity</string>
     <string name="urlShortnerKey">AIzaSyBAAo16PbIPn5P_R8D7NYetQjfeEVwDuAk</string>
     <string name="title_activity_null_act">null_act</string>
+
+    <string name="default_notification_channel_id">DefaultChannel</string>
 
 </resources>

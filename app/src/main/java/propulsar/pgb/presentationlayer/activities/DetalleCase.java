@@ -149,10 +149,10 @@ public class DetalleCase extends AppCompatActivity implements WS.OnWSRequested, 
         params.put("UserId",userID);
         if (caseID == -1) {
             params.put("ComplaintFolio", caseFolio);
-            WS.getInstance(DetalleCase.this).getCaseByFolio(params, this);
+            WS.getCaseByFolio(params, this);
         }else {
             params.put("ComplaintId", caseID);
-            WS.getInstance(DetalleCase.this).getCaseDetail(params, this);
+            WS.getCaseDetail(params, this);
         }
     }
 

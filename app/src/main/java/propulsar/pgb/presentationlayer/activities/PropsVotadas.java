@@ -83,7 +83,7 @@ public class PropsVotadas extends AppCompatActivity implements WS.OnWSRequested{
         params.put("UserId",userID);
         params.put("Skip",0);
         params.put("Take",10);
-        WS.getInstance(PropsVotadas.this).getVotedProposals(params,this);
+        WS.getVotedProposals(params,this);
     }
 
     @Override

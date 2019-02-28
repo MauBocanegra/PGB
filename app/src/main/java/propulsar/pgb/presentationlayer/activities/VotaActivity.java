@@ -76,7 +76,7 @@ public class VotaActivity extends AppCompatActivity implements WS.OnWSRequested{
         params.put("UserId",userID);
         params.put("Skip",skip);
         params.put("Take",take);
-        WS.getInstance(VotaActivity.this).getPendingProposals(params,this);
+        WS.getPendingProposals(params,this);
 
         findViewById(R.id.buttonSubirProp).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +156,7 @@ public class VotaActivity extends AppCompatActivity implements WS.OnWSRequested{
             params.put("ProposalId",((Case)dataObject).getId());
             params.put("UserId",userID);
             params.put("VoteTypeId",2);
-            WS.getInstance(VotaActivity.this).voteProposal(params,activity);
+            WS.voteProposal(params,activity);
             Toast.makeText(VotaActivity.this, "Votada EN CONTRA", Toast.LENGTH_SHORT).show();
         }
 
@@ -166,7 +166,7 @@ public class VotaActivity extends AppCompatActivity implements WS.OnWSRequested{
             params.put("ProposalId",((Case)dataObject).getId());
             params.put("UserId",userID);
             params.put("VoteTypeId",1);
-            WS.getInstance(VotaActivity.this).voteProposal(params,activity);
+            WS.voteProposal(params,activity);
             Toast.makeText(VotaActivity.this, "Votada A FAVOR", Toast.LENGTH_SHORT).show();
         }
 

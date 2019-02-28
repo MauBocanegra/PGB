@@ -6,13 +6,16 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
@@ -35,6 +38,7 @@ import java.util.Map;
 import propulsar.pgb.domainlayer.objects.AnalyticsApplication;
 import propulsar.pgb.domainlayer.WS.WS;
 import propulsar.pgb.R;
+import propulsar.pgb.domainlayer.objects.Case;
 
 import static propulsar.pgb.domainlayer.WS.WS.context;
 
@@ -45,12 +49,18 @@ public class DetalleProp extends AppCompatActivity implements WS.OnWSRequested, 
 
     ShareDialog shareDialog;
 
+    CardView buttonAFavor;
+    CardView buttonEnContra;
+
     String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_prop);
+
+        buttonAFavor = findViewById(R.id.buttonAFavor);
+        buttonEnContra = findViewById(R.id.buttonEnContra);
 
         Tracker mTracker = ((AnalyticsApplication) getApplication()).getDefaultTracker();
         //Log.i("AnalyticsDeb", "Setting screen name: " + "Splash");
@@ -64,6 +74,20 @@ public class DetalleProp extends AppCompatActivity implements WS.OnWSRequested, 
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        buttonEnContra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                votadaEnContra();
+            }
+        });
+
+        buttonAFavor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                votadaFavor();
             }
         });
 
@@ -133,8 +157,8 @@ public class DetalleProp extends AppCompatActivity implements WS.OnWSRequested, 
                             case R.id.action_facebook:{
                                 if (ShareDialog.canShow(ShareLinkContent.class)) {
                                     ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                                            .setQuote(title+" #Jala")
-                                            .setContentUrl(Uri.parse("goo.gl/ptBeaV"))
+                                            .setQuote(title+" #"+getString(R.string.app_name))
+                                            .setContentUrl(Uri.parse("http://iog.digital"))
                                             .build();
                                     shareDialog.show(linkContent);
                                 }
@@ -143,7 +167,7 @@ public class DetalleProp extends AppCompatActivity implements WS.OnWSRequested, 
                             case R.id.action_twitter:{
 
                                 TweetComposer.Builder builder = new TweetComposer.Builder(DetalleProp.this)
-                                        .text(title+" goo.gl/ptBeaV #Jala");
+                                        .text(title+" http://iog.digital #"+getString(R.string.app_name));
                                 builder.show();
 
 
@@ -184,7 +208,31 @@ public class DetalleProp extends AppCompatActivity implements WS.OnWSRequested, 
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("ProposalId",proposalID);
         params.put("UserId",userID);
-        WS.getInstance(DetalleProp.this).getProposalDetail(params,this);
+        WS.getProposalDetail(params,this);
+    }
+
+    private void votadaEnContra(){
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("ProposalId",proposalID);
+        params.put("UserId",userID);
+        params.put("VoteTypeId",2);
+        WS.voteProposal(params,DetalleProp.this);
+        Toast.makeText(DetalleProp.this, "Votada EN CONTRA", Toast.LENGTH_SHORT).show();
+
+        buttonAFavor.setVisibility(View.GONE);
+        buttonEnContra.setVisibility(View.GONE);
+    }
+
+    private void votadaFavor(){
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("ProposalId",proposalID);
+        params.put("UserId",userID);
+        params.put("VoteTypeId",1);
+        WS.voteProposal(params,DetalleProp.this);
+        Toast.makeText(DetalleProp.this, "Votada A FAVOR", Toast.LENGTH_SHORT).show();
+
+        buttonAFavor.setVisibility(View.GONE);
+        buttonEnContra.setVisibility(View.GONE);
     }
 
     public static void setForceShowIcon(PopupMenu popupMenu) {

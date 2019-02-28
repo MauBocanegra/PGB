@@ -92,7 +92,7 @@ public class SubirPropActivity extends AppCompatActivity implements WS.OnWSReque
                 params.put("UserId",userID);
                 params.put("Title",stringTitulo);
                 params.put("Description",stringDesc);
-                WS.getInstance(SubirPropActivity.this).createProposal(params,SubirPropActivity.this);
+                WS.createProposal(params,SubirPropActivity.this);
             }
         };
     }
@@ -123,7 +123,7 @@ public class SubirPropActivity extends AppCompatActivity implements WS.OnWSReque
                     desc.setText("");
                     titulo.setEnabled(true);
 
-                    WS.getInstance(SubirPropActivity.this).showSucces("¡Propueseta creada exitosamente!",findViewById(R.id.main_container));
+                    WS.showSucces("¡Propueseta creada exitosamente!",findViewById(R.id.main_container));
 
                     Toast.makeText(this, json.getJSONObject("data").getString("Message"), Toast.LENGTH_SHORT).show();
                     //Toast.makeText(this, "¡Propueseta creada exitosamente!", Toast.LENGTH_SHORT).show();

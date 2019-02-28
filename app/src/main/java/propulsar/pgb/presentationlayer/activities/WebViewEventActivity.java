@@ -50,7 +50,7 @@ public class WebViewEventActivity extends AppCompatActivity{
 
         /*
         Map<String, Object> params = new LinkedHashMap<>();
-        WS.getInstance(WebViewEventActivity.this).getAboutHTML(params,WebViewEventActivity.this);
+        WS.getAboutHTML(params,WebViewEventActivity.this);
         */
 
     }

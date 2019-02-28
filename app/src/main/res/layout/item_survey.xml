@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textColor="@color/textColorPrimary"
         android:textAppearance="?android:textAppearanceMedium"/>
     
     <android.support.v4.widget.Space
@@ -20,21 +21,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <RadioButton android:id="@+id/survey_radio_1"
+            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton android:id="@+id/survey_radio_2"
+            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton android:id="@+id/survey_radio_3"
+            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton android:id="@+id/survey_radio_4"
+            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton android:id="@+id/survey_radio_5"
+            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <RadioButton android:id="@+id/survey_radio_6"
+            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RadioGroup>

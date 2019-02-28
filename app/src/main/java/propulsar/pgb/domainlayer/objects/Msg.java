@@ -1,5 +1,9 @@
 package propulsar.pgb.domainlayer.objects;
 
+import android.view.View;
+
+import java.util.ArrayList;
+
 /**
  * Created by maubocanegra on 08/03/17.
  */
@@ -14,6 +18,24 @@ public class Msg {
     public boolean isBot;
     public String avatarURL;
     public int type;
+    public ArrayList<String> buttons;
+    public View.OnClickListener onClickListener;
+
+    public ArrayList<String> getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(ArrayList<String> buttons) {
+        this.buttons = buttons;
+    }
+
+    public View.OnClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public String getAvatarURL() {
         return avatarURL;

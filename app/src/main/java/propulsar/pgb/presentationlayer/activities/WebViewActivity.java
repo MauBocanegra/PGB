@@ -50,7 +50,7 @@ public class WebViewActivity extends AppCompatActivity implements WS.OnWSRequest
         });
 
         Map<String, Object> params = new LinkedHashMap<>();
-        WS.getInstance(WebViewActivity.this).getAboutHTML(params,WebViewActivity.this);
+        WS.getAboutHTML(params,WebViewActivity.this);
 
     }
 

@@ -163,7 +163,7 @@ public class PerfilFrag extends Fragment implements WS.OnWSRequested, View.OnCli
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("UserId",userID);
         Log.d("PERFILDEBUG","userID="+userID);
-        WS.getInstance(getActivity()).getUserProfile(params, this);
+        WS.getUserProfile(params, this);
     }
 
     @Override
@@ -203,7 +203,7 @@ public class PerfilFrag extends Fragment implements WS.OnWSRequested, View.OnCli
                 }
 
                 case WS.WS_saveProfile:{
-                    WS.getInstance(getContext()).showSucces("¡Perfil guardado exitosamente!",fragView);
+                    WS.showSucces("¡Perfil guardado exitosamente!",fragView);
                     progress.setVisibility(View.GONE);
                     break;
                 }
@@ -256,6 +256,7 @@ public class PerfilFrag extends Fragment implements WS.OnWSRequested, View.OnCli
             case R.id.perfilButtonContra:{
                 FragmentManager fragmentManager = getFragmentManager();
                 AppCompatDialogFragment diag = new DiagCambiarContra();
+                ((DiagCambiarContra)diag).setEmail(editTextCorreo.getEditableText().toString());
                 diag.show(fragmentManager,"");
                 break;
             }
@@ -336,7 +337,7 @@ public class PerfilFrag extends Fragment implements WS.OnWSRequested, View.OnCli
                 //params.put("ToNotify",notif);
                 params.put("ToNotify",true);
 
-                WS.getInstance(getActivity()).saveProfile(params, this);
+                WS.saveProfile(params, this);
 
                 break;
             }

@@ -38,6 +38,7 @@ public class BotWS {
     private static HttpURLConnection con = null;
     private static AsyncTask<Void,Void,JSONObject> async;
 
+    //Bot Token = PBBn4yPaXOY.cwA.04s.y_1XZv9iDGJpMZ-u9TSb0cHIpLJRmhPaNgCnR4LBSYE
     public static String currentToken = "";
     public static String convID = "";
     public static int expirationTime = 0;

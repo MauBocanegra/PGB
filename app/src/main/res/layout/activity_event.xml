@@ -29,6 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/govit_gradient"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
         android:clipToPadding="false">
@@ -62,27 +63,32 @@
 
                 <ImageView
                     android:id="@+id/fab_calendar"
-                    android:animateLayoutChanges="true"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="10dp"
-                    android:src="@mipmap/ic_event_blue"
-                    android:scaleType="centerCrop"/>
+                    android:layout_margin="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:animateLayoutChanges="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_event_blue" />
 
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab_share"
-                    android:animateLayoutChanges="true"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="12dp"
-                    android:src="@drawable/ic_share"
-                    android:tint="@color/colorPrimary"
-                    android:scaleType="center"/>
+                    android:animateLayoutChanges="true"
+                    android:scaleType="center"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_share"
+                    android:tint="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/event_title"
@@ -131,7 +137,7 @@
                         android:layout_marginEnd="@dimen/activity_vertical_margin"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:textColor="#333"
+                        android:textColor="@color/textColorPrimary"
                         android:textAppearance="?android:textAppearanceSmall"
                         android:text="@string/ph_events_desc"/>
 
@@ -140,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:gravity="start"
                         android:layout_height="wrap_content"
-                        android:textColor="#333"
+                        android:textColor="@color/textColorPrimary"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:textAppearance="?android:textAppearanceSmall"/>
@@ -150,7 +156,7 @@
                         android:layout_width="match_parent"
                         android:gravity="start"
                         android:layout_height="wrap_content"
-                        android:textColor="#333"
+                        android:textColor="@color/textColorPrimary"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:textAppearance="?android:textAppearanceSmall"/>
@@ -160,7 +166,7 @@
                         android:layout_width="match_parent"
                         android:gravity="start"
                         android:layout_height="wrap_content"
-                        android:textColor="#333"
+                        android:textColor="@color/textColorPrimary"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:textAppearance="?android:textAppearanceSmall"/>
@@ -170,7 +176,7 @@
                         android:layout_width="match_parent"
                         android:gravity="start"
                         android:layout_height="wrap_content"
-                        android:textColor="#333"
+                        android:textColor="@color/textColorPrimary"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:textStyle="italic|bold"

@@ -32,7 +32,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import propulsar.pgb.BuildConfig;
 import propulsar.pgb.domainlayer.objects.AnalyticsApplication;
 import propulsar.pgb.domainlayer.WS.WS;
 import propulsar.pgb.R;
@@ -45,9 +44,10 @@ public class Login extends AppCompatActivity implements
     TextInputLayout inputCorreo;
     TextInputLayout inputContra;
     View progress;
-    View progressContra;
-    View buttonLogin;
+    View buttonTengoCuenta;
     View buttonContra;
+    View buttonFacebook;
+    View buttonRegistro;
 
     // ---------------------------------------- //
     // -------------- LIFECYCLE --------------- //
@@ -55,35 +55,47 @@ public class Login extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        WS.getInstance(getApplicationContext());
 
         Tracker mTracker = ((AnalyticsApplication) getApplication()).getDefaultTracker();
         //Log.i("AnalyticsDeb", "Setting screen name: " + "Splash");
         mTracker.setScreenName("Login");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        buttonLogin = findViewById(R.id.buttonLoginNormal);
-        progress=findViewById(R.id.progress);
-        progressContra=findViewById(R.id.progressContra);
-        buttonContra = findViewById(R.id.buttonContra);
+        buttonTengoCuenta = findViewById(R.id.login_button_tengocuenta);
+        progress=findViewById(R.id.login_progress);
+        //progressContra=findViewById(R.id.progressContra);
+        buttonContra = findViewById(R.id.login_button_contra);
 
-        findViewById(R.id.fbLoginButton).setOnClickListener(this);
-        buttonLogin.setOnClickListener(this);
-        findViewById(R.id.buttonRegistrate).setOnClickListener(this);
+        buttonFacebook = findViewById(R.id.login_button_fb);
+        buttonRegistro = findViewById(R.id.login_buttonRegistro);
+
+        buttonFacebook.setOnClickListener(this);
+        //buttonLogin.setOnClickListener(this);
+        //findViewById(R.id.buttonRegistrate).setOnClickListener(this);
         buttonContra.setOnClickListener(this);
 
-        editTextCorreo = (EditText)findViewById(R.id.editTextCorreo);
-        editTextContra = (EditText)findViewById(R.id.editTextContra);
+        editTextCorreo = (EditText)findViewById(R.id.login_edittext_email);
+        editTextContra = (EditText)findViewById(R.id.login_edittext_contra);
 
-        inputCorreo = (TextInputLayout)findViewById(R.id.inputLayoutCorreo);
-        inputContra = (TextInputLayout)findViewById(R.id.inputLayoutContra);
+        inputCorreo = (TextInputLayout)findViewById(R.id.login_textinput_contra);
+        inputContra = (TextInputLayout)findViewById(R.id.login_input_email);
 
-        setInputTextLayoutColor(editTextCorreo, Color.WHITE);
+        setListeners();
+
+
+        //setInputTextLayoutColor(editTextCorreo, Color.WHITE);
+    }
+
+    private void setListeners(){
+        buttonRegistro.setOnClickListener(this);
+        buttonFacebook.setOnClickListener(this);
+        buttonTengoCuenta.setOnClickListener(this);
     }
 
     public static void setInputTextLayoutColor(EditText editText, @ColorInt int color) {
@@ -107,7 +119,7 @@ public class Login extends AppCompatActivity implements
         Log.d("WSDeb","ActivityResult");
 
         if(FacebookSdk.isFacebookRequestCode(requestCode)){
-            WS.getInstance(getApplicationContext()).getCallbackManager().onActivityResult(requestCode, resultCode, data);
+            WS.getCallbackManager().onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -157,14 +169,17 @@ public class Login extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()){
-            case R.id.fbLoginButton:{
-                findViewById(R.id.progressFacebook).setVisibility(View.VISIBLE);
+
+
+            case R.id.login_button_fb:{
+                progress.setVisibility(View.VISIBLE);
                 WS.loginFb(Login.this, Login.this);
                 break;
             }
 
-            case R.id.buttonLoginNormal:{
+            case R.id.login_buttonRegistro:{
                 Log.d("DEBRegister","CLICKED!");
 
                 View someview = this.getCurrentFocus();
@@ -177,12 +192,12 @@ public class Login extends AppCompatActivity implements
                 String contra = editTextContra.getEditableText().toString();
 
                 if(validateFields()>0){
-                    /*
-                    Map<String, Object> params = new LinkedHashMap<>();
-                    params.put("UserName","test@gmail.com");
-                    params.put("Password","9hD4CD27");
-                    WS.getInstance(Login.this).userSignIn(params,this);
-                    */
+
+                    //Map<String, Object> params = new LinkedHashMap<>();
+                    //params.put("UserName","test@gmail.com");
+                    //params.put("Password","9hD4CD27");
+                    //WS.userSignIn(params,this);
+
 
                     //progress.setVisibility(View.VISIBLE);
                     //buttonLogin.setEnabled(false);
@@ -191,16 +206,27 @@ public class Login extends AppCompatActivity implements
                 }
 
                 progress.setVisibility(View.VISIBLE);
-                buttonLogin.setEnabled(false);
+                buttonRegistro.setEnabled(false);
 
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("Email",correo);
+                params.put("Password",contra);
+                WS.registerMail(params,this);
+
+                /*
+                //--- ORIGINAL LOGIN
                 Map<String, Object> params = new LinkedHashMap<>();
                 params.put("UserName",correo);
                 params.put("Password",contra);
-                WS.getInstance(Login.this).userSignIn(params,this);
+                WS.userSignIn(params,this);
+                */
+
+                //WS.loginOrRegisterFirebaseMail(correo, contra, Login.this);
 
                 break;
             }
 
+            /*
             case R.id.buttonContra:{
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(Login.this, view);
@@ -223,13 +249,15 @@ public class Login extends AppCompatActivity implements
                 popup.show();//showing popup menu
                 break;
             }
+            */
 
-            case R.id.buttonRegistrate:{
+            case R.id.login_button_tengocuenta:{
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
                 break;
             }
         }
+
     }
 
     // ------------------------------------------- //
@@ -250,13 +278,47 @@ public class Login extends AppCompatActivity implements
                 case WS.WS_recoverPassword:{
                     JSONObject data = json.getJSONObject("data");
                     if(data.getInt("Updated")==1){
-                        WS.showSucces("Se envió a tu correo la nueva contraseña",buttonLogin);
-                        progressContra.setVisibility(View.GONE);
+                        //WS.showSucces("Se envió a tu correo la nueva contraseña",buttonLogin);
+                        progress.setVisibility(View.GONE);
                     }else{
-                        WS.showSucces("El correo ingresado no existe en la base de datos",buttonLogin);
-                        progressContra.setVisibility(View.GONE);
+                        //WS.showSucces("El correo ingresado no existe en la base de datos",buttonLogin);
+                        progress.setVisibility(View.GONE);
                     }
                     break;
+                }
+
+                case WS.WS_registerMail: {
+
+                    JSONObject data = json.getJSONObject("data");
+
+                    /*
+                    mTracker.send(
+                            new HitBuilders.EventBuilder()
+                                    .setCategory("Usuarios").setAction("RegistroUsuario").setLabel("userID").setValue(data.getInt("UserId"))
+                                    .build()
+                    );
+                    */
+
+                    if(!data.getBoolean("Success")) {
+                        WS.showMessage(data.getString("ErrorMessage"), Login.this);
+                        return;
+                    }
+
+                    String correo = editTextCorreo.getEditableText().toString();
+                    String contra = editTextContra.getEditableText().toString();
+
+                    WS.loginOrRegisterFirebaseMail(correo, contra, Login.this);
+
+                    Toast.makeText(this, getString(R.string.iniOKRegistro), Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.sharedPrefName), 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("userID",data.getInt("UserId"));
+                    editor.putString("email",data.getString("Email"));
+                    editor.putBoolean("loggedIn",data.getBoolean("Success"));
+                    editor.commit();
+                    Intent intent = new Intent(getApplicationContext(), CodigoActivity.class);
+                    startActivity(intent);
                 }
 
                 case WS.WS_userSignIn:{
@@ -272,19 +334,23 @@ public class Login extends AppCompatActivity implements
                             }
 
                             case 0:{
-                                WS.getInstance(Login.this).showMessage("Verifica que tu correo y contrseña sean correctos", Login.this);
+                                WS.showMessage("Verifica que tu correo y contrseña sean correctos", Login.this);
                                 break;
                             }
                         }
                         */
 
-                        Snackbar snack=Snackbar.make(findViewById(R.id.toolbar), "Error al inicar sesión, verifica tus datos", Snackbar.LENGTH_LONG);
+                        Snackbar snack=Snackbar.make(findViewById(R.id.toolbar), "Error al iniciar sesión, verifica tus datos", Snackbar.LENGTH_LONG);
                         View snackBarView = snack.getView();
                         snackBarView.setBackgroundColor(ContextCompat.getColor(Login.this, R.color.colorAccent));
                         snack.setAction("Action", null).show();
                         snack.show();
                         return;
                     }
+
+                    String correo = editTextCorreo.getEditableText().toString();
+                    String contra = editTextContra.getEditableText().toString();
+                    WS.loginOrRegisterFirebaseMail(correo, contra, Login.this);
 
                     SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.sharedPrefName), 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -306,7 +372,7 @@ public class Login extends AppCompatActivity implements
 
                 case WS.WS_registerFacebook:{
 
-                    findViewById(R.id.progressFacebook).setVisibility(View.GONE);
+                    //findViewById(R.id.progressFacebook).setVisibility(View.GONE);
                     JSONObject data = json.getJSONObject("data");
                     //Toast.makeText(Login.this, data.toString(), Toast.LENGTH_LONG).show();
 
@@ -321,6 +387,8 @@ public class Login extends AppCompatActivity implements
                     editor.putBoolean("loggedIn",true);
                     editor.commit();
 
+                    WS.setUserID(data.getInt("UserId"));
+
                     Toast.makeText(this, data.getString("Message"), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), TabActivity.class);
                     startActivity(intent);
@@ -330,7 +398,7 @@ public class Login extends AppCompatActivity implements
         }catch(Exception e){e.printStackTrace();}
         finally {
             progress.setVisibility(View.GONE);
-            buttonLogin.setEnabled(true);
+            //buttonLogin.setEnabled(true);
         }
 
     }

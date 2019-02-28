@@ -177,7 +177,7 @@ public class EventActivity extends AppCompatActivity implements
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("EventId",eventID);
         params.put("CreatorUserId",userID);
-        //WS.getInstance(EventActivity.this).getEventDetails(params, this);
+        //WS.getEventDetails(params, this);
         getEventsHere();
 
         mCredential = GoogleAccountCredential.usingOAuth2(EventActivity.this, Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
@@ -201,7 +201,7 @@ public class EventActivity extends AppCompatActivity implements
     private void getEventsHere(){
         Map<String, Object> params = new LinkedHashMap<>();
         //params.put("UserId",userID);
-        WS.getInstance(EventActivity.this).getEvents(params, this);
+        WS.getEvents(params, this);
     }
 
     public static void setForceShowIcon(PopupMenu popupMenu) {
@@ -898,7 +898,7 @@ public class EventActivity extends AppCompatActivity implements
                 } else {
                     Toast.makeText(EventActivity.this, "The following error occurred:\n"
                             + mLastError.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("EventLog","The following error occurred: "+ mLastError.getMessage());
+                    Log.d("EventLog","The following error occurred: "+ mLastError.getMessage()+"\n"+mLastError.toString());
                     //mOutputText.setText("The following error occurred:\n"
                             //+ mLastError.getMessage());
                 }

@@ -70,20 +70,23 @@
                     android:id="@+id/buttonChat_bot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:visibility="gone">
+
                     <ImageView
                         android:id="@+id/switchButtonBotImg"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/bot_off"/>
+                        android:src="@drawable/bot_off" />
+
                     <TextView
                         android:id="@+id/textBot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:textAppearanceSmall"
-                        android:text="@string/chat_bot"/>
+                        android:text="@string/chat_bot"
+                        android:textAppearance="?android:textAppearanceSmall" />
                 </LinearLayout>
 
                 <Space
@@ -139,108 +142,209 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/botButtons1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/bot_step1_solicitud"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorAccent"
+                    android:text="Solicitud"
+                    android:textColor="@color/colorWhite"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toStartOf="@+id/bot_step1_queja"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/bot_step1_queja"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorAccent"
+                    android:text="Queja"
+                    android:textColor="@color/colorWhite"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/bot_step1_solicitud"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/bot_step1_denuncia"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorAccent"
+                    android:text="Denuncia"
+                    android:textColor="@color/colorWhite"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toStartOf="@+id/bot_step1_sugerencia"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bot_step1_solicitud" />
+
+                <Button
+                    android:id="@+id/bot_step1_sugerencia"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/colorAccent"
+                    android:text="Sugerencia"
+                    android:textColor="@color/colorWhite"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/bot_step1_denuncia"
+                    app:layout_constraintTop_toBottomOf="@+id/bot_step1_queja" />
+
+                <Button
+                    android:id="@+id/bot_step1_otro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#DDDDDD"
+                    android:text="Otro"
+                    android:textColor="@color/textColorSecondary"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bot_step1_sugerencia" />
+            </android.support.constraint.ConstraintLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/textMainBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:animateLayoutChanges="false"
             android:clipToPadding="false"
-            android:animateLayoutChanges="false">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_sendMessage"
-                android:animateLayoutChanges="true"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_send_material"
+                android:animateLayoutChanges="true"
                 android:scaleType="center"
-                android:tint="#FFF"/>
+                android:src="@drawable/ic_send_material"
+                android:tint="#FFF" />
 
             <LinearLayout
-                android:animateLayoutChanges="false"
                 android:layout_width="0dp"
-                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
                 android:layout_toStartOf="@id/fab_sendMessage"
                 android:layout_weight="1"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content">
+                android:animateLayoutChanges="false"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/buttonLocation"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:padding="8dp"
                     android:adjustViewBounds="true"
+                    android:padding="8dp"
                     android:src="@drawable/ic_place"
-                    android:tint="@color/colorAccent"/>
+                    android:tint="@color/colorAccent" />
 
                 <ImageView
                     android:id="@+id/buttonImage"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:padding="8dp"
                     android:adjustViewBounds="true"
+                    android:padding="8dp"
                     android:src="@drawable/ic_image"
-                    android:tint="@color/colorAccent"/>
+                    android:tint="@color/colorAccent" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:animateLayoutChanges="true"
-                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tituloAccion"
-                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textColorPrimary"
+                        android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="@string/enviar_ubi"
-                        android:layout_centerVertical="true"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@color/textColorPrimary"
                         android:textStyle="bold"
-                        android:textAppearance="?android:textAppearanceMedium"/>
+                        android:visibility="visible" />
 
                     <android.support.v7.widget.CardView
-                        android:visibility="visible"
                         android:id="@+id/cardMensaje"
-                        android:animateLayoutChanges="true"
                         android:layout_width="match_parent"
-                        android:layout_margin="10dp"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="4dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_height="wrap_content">
+                        android:layout_margin="10dp"
+                        android:animateLayoutChanges="true"
+                        android:visibility="visible"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="4dp">
+
                         <propulsar.pgb.presentationlayer.CustomViews.EditTextCampo
-                            android:animateLayoutChanges="true"
                             android:id="@+id/editText_mensaje"
                             android:layout_width="match_parent"
-                            android:padding="5dp"
-                            android:maxLines="4"
-                            android:scrollbars="vertical"
-                            android:inputType="textMultiLine|textCapSentences"
                             android:layout_height="wrap_content"
-                            android:background="#FAFAFA"/>
+                            android:animateLayoutChanges="true"
+                            android:background="#FAFAFA"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:maxLines="4"
+                            android:padding="5dp"
+                            android:scrollbars="vertical" />
                     </android.support.v7.widget.CardView>
                 </RelativeLayout>
 
             </LinearLayout>
 
             <ProgressBar
-                android:animateLayoutChanges="true"
-                android:visibility="gone"
-                android:layout_alignStart="@id/fab_sendMessage"
-                android:layout_alignEnd="@id/fab_sendMessage"
-                android:layout_alignTop="@id/fab_sendMessage"
-                android:layout_alignBottom="@id/fab_sendMessage"
                 android:id="@+id/progress_chat"
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/fab_sendMessage"
+                android:layout_alignTop="@id/fab_sendMessage"
+                android:layout_alignEnd="@id/fab_sendMessage"
+                android:layout_alignBottom="@id/fab_sendMessage"
+                android:layout_margin="10dp"
+                android:animateLayoutChanges="true"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout

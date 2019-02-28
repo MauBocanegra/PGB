@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ServicesLink">http://svc.edu.govit.com.mx/api/</string>
+    <string name="app_name">Montessori</string>
+    <string name="facebook_app_id">2106260456134368</string>
+    <string name="fb_login_protocol_scheme">fb2106260456134368</string>
+    <string name="sharedPrefName">SharedPrefProcivica</string>
+
+    <string name="awareness_APIKEY">AIzaSyCQxIGv_ju71o8amk38uVOpRTK1qC-LwoU</string>
+    <string name="geo_APIKEY">AIzaSyBFIACyu8nlt5QWaTcia2q9KdIqcO3knDY</string>
+
+    <string name="android_authorities_facebook">"com.facebook.app.FacebookContentProvider2106260456134368"</string>
+</resources>

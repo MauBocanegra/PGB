@@ -1,6 +1,7 @@
 package propulsar.pgb.presentationlayer.Frags;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,9 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -22,6 +28,8 @@ import java.util.Map;
 import propulsar.pgb.domainlayer.WS.WS;
 import propulsar.pgb.presentationlayer.activities.BenefsActivity;
 import propulsar.pgb.presentationlayer.activities.ChatActivity;
+import propulsar.pgb.presentationlayer.activities.ChatFirebase;
+import propulsar.pgb.presentationlayer.activities.ChatListFirebase;
 import propulsar.pgb.presentationlayer.activities.DetalleBenefActivity;
 import propulsar.pgb.presentationlayer.activities.DetalleProp;
 import propulsar.pgb.presentationlayer.activities.EventActivity;
@@ -34,7 +42,6 @@ import propulsar.pgb.R;
  * create an instance of this fragment.
  */
 public class HomeFrag extends Fragment implements WS.OnWSRequested{
-
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -51,6 +58,22 @@ public class HomeFrag extends Fragment implements WS.OnWSRequested{
     int benefitID=-1;
 
     View view;
+
+    View cardEvento;
+    View cardEncuesta;
+    View cardBenef;
+    Button buttonVota;
+    Button buttonCuentanos;
+    Button buttonOportunidades;
+    ProgressBar progressEvento;
+    ProgressBar progressEncuesta;
+    ProgressBar progressBenef;
+    TextView tituloEvento;
+    TextView tituloEncuesta;
+    TextView tituloBenef;
+    TextView fechaEvento;
+    TextView fechaEncuesta;
+    TextView fechaBenef;
 
     public HomeFrag() {
         // Required empty public constructor
@@ -86,7 +109,7 @@ public class HomeFrag extends Fragment implements WS.OnWSRequested{
         int userID = sharedPreferences.getInt("userID",0);
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("UserId",userID);
-        WS.getInstance(getActivity()).getMenu(params, this);
+        WS.getMenu(params, this);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -98,69 +121,127 @@ public class HomeFrag extends Fragment implements WS.OnWSRequested{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        view.findViewById(R.id.homeButtonVota).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), VotaActivity.class);
-                startActivity(intent);
-            }
-        });
+        view = inflater.inflate(R.layout.fragment_home_c, container, false);
 
-        view.findViewById(R.id.homeButtonEventoHoy).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //domingo sin carros
-                if(eventID==-1){return;}
-                Bundle mBundle = new Bundle();
-                mBundle.putInt("eventID",eventID);
-                Intent intent = new Intent(getActivity(), EventActivity.class);
-                intent.putExtras(mBundle);
-                startActivity(intent);
-            }
-        });
+        instanciateObjects();
 
-        view.findViewById(R.id.homeButtonBenefs).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BenefsActivity.class);
-                startActivity(intent);
-            }
-        });
+        try {
+            if(view.findViewById(R.id.homeButtonVota)!=null)
+            view.findViewById(R.id.homeButtonVota).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), VotaActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-        view.findViewById(R.id.homeButtonChat).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                startActivity(intent);
-            }
-        });
+            if(view.findViewById(R.id.home_card_evento)!=null)
+            view.findViewById(R.id.home_card_evento).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //domingo sin carros
+                    if (eventID == -1) {
+                        return;
+                    }
+                    Bundle mBundle = new Bundle();
+                    mBundle.putInt("eventID", eventID);
+                    Intent intent = new Intent(getActivity(), EventActivity.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }
+            });
 
-        view.findViewById(R.id.homeButtonMasVotada).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //masVotada
-                if(proposalID==-1){return;}
-                Bundle mBundle = new Bundle();
-                mBundle.putInt("proposalID",proposalID);
-                mBundle.putInt("comesFrom",1);
-                Intent intent = new Intent(getActivity(), DetalleProp.class);
-                intent.putExtras(mBundle);
-                startActivity(intent);
-            }
-        });
+            if(view.findViewById(R.id.homeButtonBenefs)!=null)
+            view.findViewById(R.id.homeButtonBenefs).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), BenefsActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-        view.findViewById(R.id.homeButtonEncuesta).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(benefitID==-1){return;}
-                Intent intent = new Intent(getActivity(), DetalleBenefActivity.class);
-                intent.putExtra("BenefitId",benefitID);
-                startActivity(intent);
-            }
-        });
+            if(view.findViewById(R.id.homeButtonChat)!=null)
+            view.findViewById(R.id.homeButtonChat).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    Log.d("ChatDebug", "userID=" + WS.getUserID());
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getResources().getString(R.string.sharedPrefName), Context.MODE_PRIVATE);
+                    int userID = sharedPreferences.getInt("userID", -1);
+
+                    //userID=1;
+
+                    //TODO
+                    //Arreglar lo del nombre
+                    //Hacer las distros
+
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+
+                /*
+                Intent intent=null;
+                if(userID==1) {
+                    intent = new Intent(getActivity(), ChatListFirebase.class);
+                }else{
+                    intent = new Intent(getActivity(), ChatFirebase.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("userToDownloadChats",userID);
+                    intent.putExtras(bundle);
+                }
+                */
+                    startActivity(intent);
+                }
+            });
+
+            view.findViewById(R.id.homeButtonMasVotada).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //masVotada
+                    if (proposalID == -1) {
+                        return;
+                    }
+                    Bundle mBundle = new Bundle();
+                    mBundle.putInt("proposalID", proposalID);
+                    mBundle.putInt("comesFrom", 1);
+                    Intent intent = new Intent(getActivity(), DetalleProp.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }
+            });
+
+            view.findViewById(R.id.homeButtonEncuesta).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (benefitID == -1) {
+                        return;
+                    }
+                    Intent intent = new Intent(getActivity(), DetalleBenefActivity.class);
+                    intent.putExtra("BenefitId", benefitID);
+                    startActivity(intent);
+                }
+            });
+        }catch(Exception e){e.printStackTrace();}
 
         return view;
+    }
+
+    private void instanciateObjects(){
+
+        cardEvento = view.findViewById(R.id.home_card_evento);
+        cardEncuesta = view.findViewById(R.id.home_card_encuesta);
+        cardBenef = view.findViewById(R.id.home_card_beneficio);
+        Button buttonVota;
+        Button buttonCuentanos;
+        Button buttonOportunidades;
+        progressEvento = view.findViewById(R.id.home_progress_evento);
+        progressEncuesta = view.findViewById(R.id.home_progress_encuesta);
+        progressBenef = view.findViewById(R.id.home_progress_beneficio);
+        tituloEvento = view.findViewById(R.id.home_evento_titulo);
+        tituloEncuesta = view.findViewById(R.id.home_encuesta_titulo);
+        tituloBenef = view.findViewById(R.id.home_benef_titulo);;
+        fechaEvento = view.findViewById(R.id.home_evento_fecha);
+        fechaEncuesta = view.findViewById(R.id.home_encuesta_fecha);
+        fechaBenef = view.findViewById(R.id.home_benef_fecha);
+
     }
 
     @Override
@@ -175,23 +256,43 @@ public class HomeFrag extends Fragment implements WS.OnWSRequested{
             switch (ws) {
                 case WS.WS_getMenu: {
                     JSONObject data = json.getJSONObject("data");
-                    view.findViewById(R.id.progressBenefit).setVisibility(View.GONE);
+                    progressEvento.setVisibility(View.GONE);
+                    String[] fEventSplit = (data.getString("EventStartTime").split("T")[0]).split("-");
+                    fechaEvento.setText(fEventSplit[2]+"-"+fEventSplit[1]+"-"+fEventSplit[0]);
+                    tituloEvento.setText(data.getString("EventTitle"));
+                    eventID = data.getInt("EventId");
+                    progressEncuesta.setVisibility(View.GONE);
+                    String [] fPropSplit = (data.getString("ProposalCreatedAt").split("T")[0]).split("-");
+                    fechaEncuesta.setText(fPropSplit[2]+"-"+fPropSplit[1]+"-"+fPropSplit[0]);
+                    tituloEncuesta.setText(data.getString("ProposalTitle"));
+                    proposalID = data.getInt("ProposalId");
+                    progressBenef.setVisibility(View.GONE);
+                    String [] fBeneSplit = (data.getString("BenefitDate").split("T")[0]).split("-");
+                    fechaBenef.setText(fBeneSplit[2]+"-"+fBeneSplit[1]+"-"+fBeneSplit[0]);
+                    tituloBenef.setText(data.getString("BenefitTitle"));
+                    benefitID=data.getInt("BenefitId");
+                    Picasso.with(getActivity()).load(data.getString("EventImageUrl")).into((ImageView)view.findViewById(R.id.eventbghome));
+
+                    /*
+                    JSONObject data = json.getJSONObject("data");
+                    view.findViewById(R.id.home_progress_beneficio).setVisibility(View.GONE);
                     String[] fEventSplit = (data.getString("EventStartTime").split("T")[0]).split("-");
                     ((TextView)view.findViewById(R.id.fechaBenefit)).setText(fEventSplit[2]+"-"+fEventSplit[1]+"-"+fEventSplit[0]);
                     ((TextView)view.findViewById(R.id.tituloBenefit)).setText(data.getString("EventTitle"));
                     eventID = data.getInt("EventId");
-                    view.findViewById(R.id.progressVotada).setVisibility(View.GONE);
+                    view.findViewById(R.id.home_progress_encuesta).setVisibility(View.GONE);
                     String [] fPropSplit = (data.getString("ProposalCreatedAt").split("T")[0]).split("-");
                     ((TextView)view.findViewById(R.id.fechaVotada)).setText(fPropSplit[2]+"-"+fPropSplit[1]+"-"+fPropSplit[0]);
                     ((TextView)view.findViewById(R.id.tituloVotada)).setText(data.getString("ProposalTitle"));
                     proposalID = data.getInt("ProposalId");
-                    view.findViewById(R.id.progressEncuesta).setVisibility(View.GONE);
+                    view.findViewById(R.id.home_progress_evento).setVisibility(View.GONE);
                     String [] fBeneSplit = (data.getString("BenefitDate").split("T")[0]).split("-");
                     ((TextView)view.findViewById(R.id.fechaEncuesta)).setText(fBeneSplit[2]+"-"+fBeneSplit[1]+"-"+fBeneSplit[0]);
                     ((TextView)view.findViewById(R.id.tituloEncuesta)).setText(data.getString("BenefitTitle"));
                     benefitID=data.getInt("BenefitId");
-
                     Picasso.with(getActivity()).load(data.getString("EventImageUrl")).into((ImageView)view.findViewById(R.id.eventbghome));
+                    */
+
                     break;
                 }
             }

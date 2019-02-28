@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/govit_gradient"
     tools:context="propulsar.pgb.presentationlayer.activities.TabActivity">
 
     <android.support.v7.widget.Toolbar
@@ -34,11 +35,11 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/buttonVerVotadas"
-            app:layout_heightPercent="9%"
-            app:layout_widthPercent="50%"
+            app:cardBackgroundColor="@color/buttonRed"
             app:cardCornerRadius="0dp"
             app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/colorGreen">
+            app:layout_heightPercent="9%"
+            app:layout_widthPercent="50%">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,16 +50,16 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:adjustViewBounds="true"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_checkbox"/>
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/ic_checkbox"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
+                    android:text="@string/vota_verVotadas"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:text="@string/vota_verVotadas"/>
+                    android:textColor="#FFF" />
 
 
             </LinearLayout>
@@ -85,7 +86,7 @@
                     android:layout_height="28dp"
                     android:adjustViewBounds="true"
                     android:tint="#FFF"
-                    android:src="@drawable/ic_add"/>
+                    app:srcCompat="@drawable/ic_add"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="4dp"
@@ -196,13 +197,13 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardButtonNo"
-            app:layout_heightPercent="11%"
-            app:layout_widthPercent="44%"
+            app:cardBackgroundColor="@color/colorRedButton2"
             app:cardCornerRadius="0dp"
-            app:layout_marginTopPercent="85%"
             app:cardElevation="4dp"
+            app:layout_heightPercent="11%"
             app:layout_marginLeftPercent="4%"
-            app:cardBackgroundColor="@color/buttonRed">
+            app:layout_marginTopPercent="85%"
+            app:layout_widthPercent="44%">
 
             <LinearLayout
                 android:id="@+id/buttonVotarNO"
@@ -214,10 +215,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
+                    android:text="@string/vota_encontra"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:textStyle="bold"
-                    android:text="@string/vota_encontra"/>
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -225,13 +226,13 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/buttonVotarSI"
-            app:layout_heightPercent="11%"
-            app:layout_widthPercent="44%"
+            app:cardBackgroundColor="@color/colorGreen"
             app:cardCornerRadius="0dp"
-            app:layout_marginTopPercent="85%"
-            app:layout_marginLeftPercent="52%"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/colorAccent">
+            app:layout_heightPercent="11%"
+            app:layout_marginLeftPercent="52%"
+            app:layout_marginTopPercent="85%"
+            app:layout_widthPercent="44%">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -242,10 +243,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFF"
+                    android:text="@string/vota_afavor"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:textStyle="bold"
-                    android:text="@string/vota_afavor"/>
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

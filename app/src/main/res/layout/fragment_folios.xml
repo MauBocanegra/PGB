@@ -2,25 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/govit_gradient"
     tools:context="propulsar.pgb.presentationlayer.Frags.FoliosFrag"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:padding="@dimen/activity_vertical_margin">
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/casesNoHay"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:layout_margin="10dp"
-        android:textColor="@color/textColorPrimary"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="@string/cases_nohay"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/foliosRecyclerView"
+        android:background="@color/cardview_light_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>
+
+    <TextView
+        android:id="@+id/casesNoHay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:text="@string/cases_nohay"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/textColorDark"
+        android:textStyle="bold"
+        android:visibility="visible" />
 
 </RelativeLayout>

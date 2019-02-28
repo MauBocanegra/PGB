@@ -2,19 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/govit_gradient"
     tools:context="propulsar.pgb.presentationlayer.Frags.NotifFrag"
     android:padding="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/notifsNoHay"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:textColor="@color/textColorPrimary"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:text="@string/notifs_nohay"/>
 
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -23,9 +14,22 @@
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/notifsRecyclerView"
+            android:background="@color/cardview_light_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/notifsNoHay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/notifs_nohay"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/textColorDark"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </RelativeLayout>

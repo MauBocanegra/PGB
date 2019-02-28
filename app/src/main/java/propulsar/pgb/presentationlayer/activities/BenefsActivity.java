@@ -117,7 +117,7 @@ public class BenefsActivity extends AppCompatActivity implements WS.OnWSRequeste
         params.put("UserId",userID);
         params.put("Skip",skip);
         params.put("Take",take);
-        WS.getInstance(BenefsActivity.this).getBenefitsList(params,this);
+        WS.getBenefitsList(params,this);
     }
 
     private void addToList(ArrayList<Benefs> newCases){

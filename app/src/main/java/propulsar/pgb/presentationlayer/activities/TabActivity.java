@@ -398,7 +398,9 @@ public class TabActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.d("HUB NOTIFICATION",notificationMessage);
+                try {
+                    Log.d("HUB NOTIFICATION", notificationMessage);
+                }catch(Exception e){e.printStackTrace();}
                 //Toast.makeText(Splash.this, notificationMessage, Toast.LENGTH_LONG).show();
             }
         });

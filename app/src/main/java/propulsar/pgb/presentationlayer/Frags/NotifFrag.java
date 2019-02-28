@@ -153,7 +153,7 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
         params.put("UserId",userID);
         params.put("Skip",skip);
         params.put("Take",take);
-        WS.getInstance(getActivity()).getNotifs(params,this);
+        WS.getNotifs(params,this);
     }
 
     // ---------------------------------------------------------- //
@@ -187,6 +187,14 @@ public class NotifFrag extends Fragment implements WS.OnWSRequested, SwipeRefres
                     }
 
                     addToList(newNotifs);
+
+                    if(newNotifs.size()>0){
+                        Log.d("NotifsDebug","Notifs HAY!");
+                        view.findViewById(R.id.notifsNoHay).setVisibility(View.GONE);
+                    }else{
+                        Log.d("NotifsDebug","Notifs==0 SHOW LEGEND");
+                        view.findViewById(R.id.notifsNoHay).setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }catch(Exception e){e.printStackTrace();}

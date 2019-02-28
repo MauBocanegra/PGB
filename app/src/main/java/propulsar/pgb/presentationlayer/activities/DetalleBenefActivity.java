@@ -59,7 +59,7 @@ public class DetalleBenefActivity extends AppCompatActivity implements WS.OnWSRe
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("BenefitId",benefitID);
         params.put("UserId",userID);
-        WS.getInstance(DetalleBenefActivity.this).getBenefitDetails(params,this);
+        WS.getBenefitDetails(params,this);
 
         encuestaContestada = findViewById(R.id.benefs_encuestaContestada);
         buttonEncuesta = findViewById(R.id.buttonContestarEncuesta);
@@ -74,7 +74,7 @@ public class DetalleBenefActivity extends AppCompatActivity implements WS.OnWSRe
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("BenefitId",benefitID);
         params.put("UserId",userID);
-        WS.getInstance(DetalleBenefActivity.this).getBenefitDetails(params,this);
+        WS.getBenefitDetails(params,this);
     }
 
     @Override

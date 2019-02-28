@@ -50,6 +50,7 @@ public class RegistrationIntentService extends IntentService {
                 if (userID == 0) {
                     regID = hub.register(FCM_token,"Unregistered").getRegistrationId();
                 }else{
+                    Log.d("HubDebug","FCM_Token="+FCM_token+" USERID = "+userID);
                     regID = hub.register(FCM_token,"ALL",""+userID).getRegistrationId();
                 }
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -102,7 +103,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                 holder.fecha.setVisibility(View.GONE);
                 holder.mapPreview.setVisibility(View.VISIBLE);
 
-                Picasso.with(activity).load("https://maps.googleapis.com/maps/api/staticmap?center=" +mDataset.get(position).getMsg()+ "&zoom=17&size=500x400&maptype=roadmap" + "&markers=color:red%7C" +mDataset.get(position).getMsg()).into(holder.mapPreview);
+                Log.d("MapsScreenshot","https://maps.googleapis.com/maps/api/staticmap?center=" +mDataset.get(position).getMsg()+ "&zoom=17&size=500x400&maptype=roadmap" + "&markers=color:red%7C" +mDataset.get(position).getMsg()+"&key=AIzaSyC3XcHPwMDu1cFvZA2sVjkILMZ3q_ieuPQ");
+                Picasso.with(activity).load("https://maps.googleapis.com/maps/api/staticmap?center=" +mDataset.get(position).getMsg()+ "&zoom=17&size=500x400&maptype=roadmap" + "&markers=color:red%7C" +mDataset.get(position).getMsg()+"&key=AIzaSyC3XcHPwMDu1cFvZA2sVjkILMZ3q_ieuPQ").into(holder.mapPreview);
                 final String loc = mDataset.get(position).getMsg();
                 holder.mapPreview.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -187,6 +189,104 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
                         }
                     });
                 }
+
+                if(mDataset.get(position).getButtons()!=null){
+                if(mDataset.get(position).getButtons().size()>0){
+                    ArrayList<String> buttons = mDataset.get(position).getButtons();
+
+                    if(buttons.size()>=1){
+                        holder.button1.setVisibility(View.VISIBLE);
+                        holder.button1.setText(buttons.get(0));
+                        holder.button1.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button1.setVisibility(View.GONE);
+                        holder.button1.setText("");
+                    }
+
+                    if(buttons.size()>=2){
+                        holder.button2.setVisibility(View.VISIBLE);
+                        holder.button2.setText(buttons.get(1));
+                        holder.button2.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button2.setVisibility(View.GONE);
+                        holder.button2.setText("");
+                    }
+
+                    if(buttons.size()>=3){
+                        holder.button3.setVisibility(View.VISIBLE);
+                        holder.button3.setText(buttons.get(2));
+                        holder.button3.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button3.setVisibility(View.GONE);
+                        holder.button3.setText("");
+                    }
+
+                    if(buttons.size()>=4){
+                        holder.button4.setVisibility(View.VISIBLE);
+                        holder.button4.setText(buttons.get(3));
+                        holder.button4.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button4.setVisibility(View.GONE);
+                        holder.button4.setText("");
+                    }
+
+                    if(buttons.size()>=5){
+                        holder.button5.setVisibility(View.VISIBLE);
+                        holder.button5.setText(buttons.get(4));
+                        holder.button5.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button5.setVisibility(View.GONE);
+                        holder.button5.setText("");
+                    }
+
+                    if(buttons.size()>=6){
+                        holder.button6.setVisibility(View.VISIBLE);
+                        holder.button6.setText(buttons.get(5));
+                        holder.button6.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button6.setVisibility(View.GONE);
+                        holder.button6.setText("");
+                    }
+
+                    if(buttons.size()>=7){
+                        holder.button7.setVisibility(View.VISIBLE);
+                        holder.button7.setText(buttons.get(6));
+                        holder.button7.setOnClickListener(mDataset.get(position).getOnClickListener());
+                    }else{
+                        holder.button7.setVisibility(View.GONE);
+                        holder.button7.setText("");
+                    }
+                }else{
+                    holder.button1.setVisibility(View.GONE);
+                    holder.button1.setText("");
+                    holder.button2.setVisibility(View.GONE);
+                    holder.button2.setText("");
+                    holder.button3.setVisibility(View.GONE);
+                    holder.button3.setText("");
+                    holder.button4.setVisibility(View.GONE);
+                    holder.button4.setText("");
+                    holder.button5.setVisibility(View.GONE);
+                    holder.button5.setText("");
+                    holder.button6.setVisibility(View.GONE);
+                    holder.button6.setText("");
+                    holder.button7.setVisibility(View.GONE);
+                    holder.button7.setText("");
+                }}else if(holder.button1!=null){
+                    holder.button1.setVisibility(View.GONE);
+                    holder.button1.setText("");
+                    holder.button2.setVisibility(View.GONE);
+                    holder.button2.setText("");
+                    holder.button3.setVisibility(View.GONE);
+                    holder.button3.setText("");
+                    holder.button4.setVisibility(View.GONE);
+                    holder.button4.setText("");
+                    holder.button5.setVisibility(View.GONE);
+                    holder.button5.setText("");
+                    holder.button6.setVisibility(View.GONE);
+                    holder.button6.setText("");
+                    holder.button7.setVisibility(View.GONE);
+                    holder.button7.setText("");
+                }
                 break;
             }
 
@@ -239,7 +339,9 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
             */
        // }
 
-        Log.d("DebugMsg","["+mDataset.get(position).getMsg()+"]msgLen="+mDataset.get(position).getMsg().length()+" url["+mDataset.get(position).getUrl()+"]Len="+mDataset.get(position).getUrl().length());
+        try {
+            Log.d("DebugMsg", "[" + mDataset.get(position).getMsg() + "]msgLen=" + mDataset.get(position).getMsg().length() + " url[" + mDataset.get(position).getUrl() + "]Len=" + mDataset.get(position).getUrl().length());
+        }catch(Exception e){}
 
     }
 
@@ -257,6 +359,15 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
         public ImageView mapPreview;
         public ImageView iconProfile;
 
+        public Button button1;
+        public Button button2;
+        public Button button3;
+        public Button button4;
+        public Button button5;
+        public Button button6;
+        public Button button7;
+
+
         public ViewHolder(View v) {
             super(v);
             fecha = (TextView)v.findViewById(R.id.msg_fecha);
@@ -265,6 +376,14 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>{
             link = (TextView)v.findViewById(R.id.chat_link_text);
             mapPreview = (ImageView)v.findViewById(R.id.mapPreview);
             iconProfile = (ImageView)v.findViewById(R.id.iconPerfil);
+
+            button1 = v.findViewById(R.id.button2);
+            button2 = v.findViewById(R.id.button3);
+            button3 = v.findViewById(R.id.button4);
+            button4 = v.findViewById(R.id.button5);
+            button5 = v.findViewById(R.id.button6);
+            button6 = v.findViewById(R.id.button7);
+            button7 = v.findViewById(R.id.button8);
         }
     }
 }

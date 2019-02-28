@@ -90,7 +90,7 @@ public class SurveyActivity extends AppCompatActivity implements WS.OnWSRequeste
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("SurveyId",surveyID);
         params.put("UserId",userID);
-        WS.getInstance(SurveyActivity.this).getSurveyDetail(params,this);
+        WS.getSurveyDetail(params,this);
 
         findViewById(R.id.buttonSendSurveyAnswers).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +127,7 @@ public class SurveyActivity extends AppCompatActivity implements WS.OnWSRequeste
             params.put("Question",ans.getQuestion());
             params.put("Answer",ans.getId());
             params.put("UserId",userID);
-            WS.getInstance(SurveyActivity.this).answerSurveyQuestion(params,this);
+            WS.answerSurveyQuestion(params,this);
         }
     }
 
