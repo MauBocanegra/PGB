@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "928697845569",
+    "firebase_url": "https://yonayaritdos.firebaseio.com",
+    "project_id": "yonayaritdos",
+    "storage_bucket": "yonayaritdos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928697845569:android:4c8ae1e7892be917",
+        "android_client_info": {
+          "package_name": "propulsar.yonayarit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928697845569-osfq52e9eh13k7l3cdsulk0h6t5kslnn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "propulsar.yonayarit",
+            "certificate_hash": "4177ed43113763058ff452496d3cb65afc0798fb"
+          }
+        },
+        {
+          "client_id": "928697845569-gcur706f74gjcjcruqbnnp3u65muipue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZhQ7vKDyOxy7UDzt52ZR4OvFSwb7_wDg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928697845569-gcur706f74gjcjcruqbnnp3u65muipue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
